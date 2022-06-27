@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import Layout from "../components/Layout"
 
 const Homepage = () => {
 
     // dummy api
     const categoryApi = ['Novel','Fiction','Comic','Textbook','History','Horror']
-
-
     const params = useParams()
     const [pathCategory] = useState(params.category)
+
     useEffect(() => {
         if (pathCategory) {
             if (categoryApi.find((search) => (search === pathCategory))) {
@@ -20,10 +20,10 @@ const Homepage = () => {
             console.log('all')
         }
     })
+    
     return (
-        <div className="bg-slate-400">
-            ini homepage{params.category}
-        </div>
+        <Layout>
+        </Layout>
     )
 }
 export default Homepage
