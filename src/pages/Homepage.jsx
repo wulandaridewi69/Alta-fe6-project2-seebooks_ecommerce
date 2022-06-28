@@ -81,7 +81,7 @@ const Homepage = () => {
     
     return (
         <Layout>
-            <div className="p-4">
+            <div className="p-4 pt-0">
                 <div className="flex gap-6">
                     <div className="px-9 py-3 bg-teal-600 hover:bg-teal-900 cursor-pointer text-white rounded" onClick={()=>handleNavigate('')}>
                         Books
