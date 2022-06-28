@@ -87,3 +87,11 @@ circle {
   width: 100%;
   text-align: center;
 }
+
+.success {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 20rem;
+  height: auto;
+}
