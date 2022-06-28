@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
-import { useParams,useNavigate } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
+import Button from "../components/button"
 import Layout from "../components/Layout"
 import { CardBook } from "../components/Card"
 import vectorImg from "../assets/5836 1.png"
@@ -123,7 +124,7 @@ const Homepage = () => {
                 ))}
             </div>
             <div className="flex justify-center my-6">
-                <button className="bg-teal-600">Load More</button>
+                <Button>Load More</Button>
             </div>
         </Layout>
     )

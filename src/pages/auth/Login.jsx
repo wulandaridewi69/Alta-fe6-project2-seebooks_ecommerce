@@ -4,6 +4,7 @@ import imgVector from '../../assets/5836 1.png'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import Button from '../../components/button'
 
 const Login = () => {
     const navigate = useNavigate()
@@ -98,7 +99,7 @@ const Login = () => {
                             </div>
                         </div>
                         <div className='flex flex-col items-center font-bold'>
-                            <button className='py-2 px-16 bg-teal-600 text-white rounded self-center' onClick={() => handleSubmit()}>Login</button>
+                            <Button onClick={() => handleSubmit()}>Login</Button>
                             <p className='text-teal-600'>or</p>
                             <Link className='underline text-teal-600' to={'/signUp'}>Create Account</Link>
                         </div>
