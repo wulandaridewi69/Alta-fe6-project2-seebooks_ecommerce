@@ -11,6 +11,12 @@
   pointer-events: none;
 }
 
+@media (min-width: 1200px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -44,11 +50,7 @@
 
 .header {
   background-color: #19928a;
-  margin: 0px 0px 0px -150px;
-  /* padding: 0rem 15rem 0rem 0rem; */
   height: 70px;
-  left: 23px;
-  top: 11px;
   color: #FFFFFF;
 }
 
@@ -59,18 +61,20 @@ circle {
   background-color: #FFFFFF;
   border-radius: 60%;
   margin-top: 5px;
-  margin-left: 15rem;
+  margin-left: 1rem;
 }
 
 .search {
-  margin-top: 11%;
-  padding-left: 12rem;
+  margin-top: 6%;
+  width: 100%;
 }
 
 .cart {
-  margin-top: 22%;
-  height: 50%;
-  padding-left: 15rem;
+  padding-top: 12px;
+  width: 3rem;
+  height: auto;
+  margin-left: 2rem;
+
 }
 
 .logo {

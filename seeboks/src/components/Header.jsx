@@ -8,12 +8,12 @@ const Header = (props) => {
         <div className='header'>
             <div className='container'>
                 <div className='row'>
-                    <div className='col-7'>
+                    <div className='col-6'>
                         <h1 className='logo'>SEEBOOKS</h1>
                     </div>
-                     <div className='col-2'>
+                     <div className='col-4'>
                         {/* <img src={Search} className='icon-search'/> */}
-                        <input className='search'></input>
+                        <input className='search' placeholder='search'></input>
                     </div> 
                     <div className='col-1'>
                         <img src={Cart} className='cart' />
