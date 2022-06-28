@@ -8,7 +8,7 @@ const Passed = (props) => {
     <div className='success'>
       <img src={Success}  />
     </div>
-    <div className='text-emerald-700 text-center text-5xl'>
+    <div className='passed text-center text-5xl'>
       <h6>Yeah...You did it</h6>
     </div>
     </>

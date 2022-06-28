@@ -23,7 +23,7 @@ function App() {
     <Button color='green' onClick={handleClick}>Buy</Button>
     <Footer/>
     </div>
-    {/* <Passed/> */}
+    <Passed/>
     </>
   );
 }
