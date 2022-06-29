@@ -94,7 +94,7 @@ const Checkout = () => {
                         <div className='col-6'>
                             <div className='container '>
                                 <div className='row'>
-                                    <div className='flex text-lg pt-75 pb-20 justify-center mr-10'>
+                                    <div className='flex text-2xl font-bold text-center pt-20 pb-8 justify-center mr-10'>
                                         <div className='col-3'>Subtotal:</div>
                                         <div className='col-3'>$30.00</div>
                                     </div>

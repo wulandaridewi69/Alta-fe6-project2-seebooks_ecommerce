@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
-import { useParams,useNavigate } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
+import Button from "../components/Button"
 import Layout from "../components/Layout"
 import { CardBook } from "../components/Card"
 import vectorImg from "../assets/5836 1.png"
@@ -13,7 +14,7 @@ import imgTextBooks from "../assets/modern-physics.jpg"
 const Homepage = () => {
 
     // dummy api
-    const categoryApi = ['Novel', 'Fiction', 'Comic', 'Textbook', 'History', 'Horror']
+    const categoryApi = [' Novel','Magazine','Comic','Textbook','Biography','Encyclopedia']
     const produk = [
         {
             id:1,
@@ -81,7 +82,7 @@ const Homepage = () => {
     
     return (
         <Layout>
-            <div className="p-4">
+            <div className="p-4 pt-0">
                 <div className="flex gap-6">
                     <div className="px-9 py-3 bg-teal-600 hover:bg-teal-900 cursor-pointer text-white rounded" onClick={()=>handleNavigate('')}>
                         Books
@@ -123,7 +124,7 @@ const Homepage = () => {
                 ))}
             </div>
             <div className="flex justify-center my-6">
-                <button className="bg-teal-600">Load More</button>
+                <Button className="bg-teal-600 py-2 px-5 rounded text-white">Load More</Button>
             </div>
         </Layout>
     )
