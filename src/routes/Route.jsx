@@ -7,6 +7,7 @@ import Login from "../pages/auth/Login";
 import Detailbook from "../pages/Detailbook";
 import Signup from "../pages/auth/Signup";
 import Checkout from "../pages/Checkout";
+import Profile from "../pages/Profile";
 
 const Router = () => {
     const [token, setToken] = useState(null);
@@ -27,6 +28,7 @@ const Router = () => {
                     <Route path="/signup" element={<Signup />}></Route>
                     <Route path="/detail/:book_id" element={<Detailbook />}></Route>
                     <Route path="/checkout" element={<Checkout />}></Route>
+                    <Route path="/profile" element={<Profile />}></Route>
                 </Routes>
             </BrowserRouter>
         </TokenContext.Provider>
