@@ -5,7 +5,7 @@ import { Link, Navigate } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { TokenContext } from '../../utils/context'
 import axios from 'axios'
-import Button from '../../components/button'
+import Button from '../../components/Button'
 
 const Signup = () => {
     const navigate = useNavigate()

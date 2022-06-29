@@ -12,14 +12,7 @@ const Button = ({ children, color, ...props}) => {
 
     const colorClassName = buttonColor[color || 'primary'];
 
-    // const onClick = () => {
-    //     let x = document.getElementById("myBtn");
-    //     if (props.disabled){
-    //         x.disabled = true;
-    //     }
-    // }
     return (
-        // <button className={'btn' + loginClassName } type="button" id="myBtn" onclick={onclick}>{children}</button>
         <button className={`btn ${colorClassName}`} {...props}> 
         {children}
         </button>
