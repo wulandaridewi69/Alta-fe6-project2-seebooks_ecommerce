@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TokenContext } from '../utils/context';
 import Cart from '../assets/cart.png';
-import '../styles/App.css'
+import '../style/App.css'
 import Search from '../assets/search.png'
-import Button from './button';
+import Button from '../components/Button';
 
 const Header = () => {
     const navigate = useNavigate()

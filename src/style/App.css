@@ -50,40 +50,43 @@
 
 .header {
   background-color: #19928a;
-  height: 70px;
+  height: 4rem;
   color: #ffffff;
 }
 
 circle {
   display: flex;
-  width: 60px;
-  height: 60px;
+  width: 3rem;
+  height: 3rem;
   background-color: #ffffff;
-  border-radius: 60%;
-  margin-top: 5px;
-  margin-left: 1rem;
+  border-radius: 20px;
+  margin-left: 7rem;
+  margin-top: 7%;
 }
 
 .search {
-  margin-top: 6%;
-  width: 100%;
+  margin-top: 10%;
+  width: 140%;
+  height: auto;
 }
 
 .cart {
   padding-top: 12px;
-  width: 3rem;
+  width: 45%;
   height: auto;
   margin-left: 2rem;
 }
 
 .logo {
-  padding-top: 1%;
-  padding-right: 80%;
+  font-size: 3rem;
+  padding-left: -3rem;
+  display: flex;
+  font-weight: 700;
 }
 
 .footer {
   background-color: #19928a;
-  height: 3rem;
+  height: 2rem;
   position: fixed;
   left: 0;
   bottom: 0;
@@ -105,4 +108,22 @@ circle {
   font-weight: bold;
   color: darkcyan;
   font-size: 2rem;
+}
+fieldset {
+  border: 1px solid #000;
+}
+
+.legend {
+  float: none;
+  width: auto;
+  font-size: inherit;
+  padding: 0;
+  margin-bottom: 0.5rem;
+  line-height: inherit;
+}
+
+@media (min-width: 1400px) {
+  .container-xxl {
+    max-width: fit-content;
+  }
 }

@@ -5,10 +5,11 @@ import App from './pages/App';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
+
 // export default Header;
 // export default Footer;
 
-import './styles/index.css';
+import './style/index.css';
 import RouteApp from './routes/Route'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
