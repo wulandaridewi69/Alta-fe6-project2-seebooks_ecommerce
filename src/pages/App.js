@@ -2,7 +2,7 @@
 import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import Button from '../components/Button';
+import Button from '../components/button';
 import Passed from "../components/Passed";
 
 const App = () => {

@@ -2,7 +2,7 @@ import React from 'react'
 import Product from '../assets/products.png'
 import History from '../assets/history.png'
 import Layout from '../components/Layout'
-import Button from '../components/Button'
+import Button from '../components/button'
 import Photo from '../assets/profile.jpg'
 import { useState } from 'react'
 import { useEffect } from 'react'
@@ -73,7 +73,7 @@ const Profile = (props) => {
         <Layout>
             <div className='container-xxl'>
                 <div className='row'>
-                    <div className='col-2 bg-slate-200'>
+                    <div className='col-2 min-h-screen bg-slate-200'>
                         <div className='product flex gap-x-5 mt-24'>
                             <img src={Product} />
                             <p>Products</p>
@@ -116,7 +116,7 @@ const Profile = (props) => {
                         </form>
                         <br />
                         <div className='container'>
-                            <div className='row'>
+                            <div className='flex'>
                                 <div className='col-6'>
                                     <Button className='btn-primary text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-teal-500 hover:bg-teal-600 ... text-center text-base' text='Save' onClick={handleSubmit}>Update</Button>
                                 </div>
