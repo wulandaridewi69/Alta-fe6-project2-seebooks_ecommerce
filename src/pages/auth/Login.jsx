@@ -4,7 +4,7 @@ import imgVector from '../../assets/5836 1.png'
 import { Link, Navigate } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import Button from '../../components/Button'
+import Button from '../../components/button'
 import { TokenContext } from "../../utils/context";
 
 const Login = () => {

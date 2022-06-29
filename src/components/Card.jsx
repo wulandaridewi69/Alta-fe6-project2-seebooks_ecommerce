@@ -41,7 +41,7 @@ export const CardBook = (props) => {
 
 export const CardProduct = (props) => {
   return (
-    <div className='bg-white shadow-lg rounded-lg overflow-hidden pb-4 flex flex-col justify-between'>
+    <div className='bg-white shadow rounded-lg overflow-hidden pb-4 flex flex-col justify-between'>
         <div className=''>
             <div className='h-64 flex justify-center cursor-pointer' onClick={()=>props.goToDetail()}>
                 <img src={props.cardImg} className="h-full" alt="" />

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
-import Button from "../components/Button"
+import Button from "../components/button"
 import Layout from "../components/Layout"
 import { CardBook } from "../components/Card"
 import axios from 'axios'
@@ -86,7 +86,7 @@ const Homepage = () => {
                 setPathCategory('All')
                 setCategorys(data)
             } else {
-                if (data.find((search) => search.name.toLowerCase() === pathCategory.toLowerCase())) {
+                if (data.find((search) => search.name.toLowerCase() === pathCategory.toLowerCase()) || pathCategory.toLowerCase()==='all') {
                     setCategorys(data)
                 } else {
                     navigate(`../${pathCategory}/Not Found`,{replace:true})
@@ -113,7 +113,7 @@ const Homepage = () => {
     } else {
         return (
             <Layout>
-                <div className="p-4 pt-0">
+                <div className="p-4">
                     <div className="flex gap-6">
                         <div className="px-9 py-3 bg-teal-600 hover:bg-teal-900 cursor-pointer text-white rounded" onClick={() => handleNavigate('')}>
                             Books
@@ -139,8 +139,8 @@ const Homepage = () => {
                         <img src={vectorImg} alt="" />
                     </div>
                 </div>
-                <div className="text-4xl font-bold pl-5 border-l-8 border-teal-600">{pathCategory}</div>
-                <div className="mt-5 grid grid-cols-2 xl:grid-cols-6 gap-4">
+                <div className="text-4xl font-bold pl-5 ml-5 border-l-8 border-teal-600">{pathCategory}</div>
+                <div className="mt-5 pt-0 p-4 grid grid-cols-2 xl:grid-cols-6 gap-4">
                     {produk.map((book) => (
                         <CardBook
                             key={book.id}

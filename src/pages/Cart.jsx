@@ -106,24 +106,26 @@ const Cart = () => {
     if (token !== "0") {
         return (
             <Layout>
-                <p className='font-bold text-2xl'>Shopping Cart</p>
-                <div className="mt-5 grid grid-cols-2 xl:grid-cols-6 gap-4">
-                    {data.map((id) => {
-                        subTotal += parseInt(produk[id-1].price)
-                        return (
-                            <CardProduct
-                                key={produk[id-1].id}
-                                cardImg={produk[id-1].imgSrc}
-                                title={produk[id-1].title}
-                                writer={produk[id-1].writer}
-                                qty={produk[id-1].stock}
-                                payment={produk[id-1].price}
-                                goToDetail={() => handleEdit(id)}
-                                edit={() => handleEdit(id)}
-                                delete={() => selectDelete(id)}
-                            />
-                        )
-                    })}
+                <div className='p-4'>
+                    <p className='font-bold text-2xl'>Shopping Cart</p>
+                    <div className="mt-5 grid grid-cols-2 xl:grid-cols-6 gap-4">
+                        {data.map((id) => {
+                            subTotal += parseInt(produk[id-1].price)
+                            return (
+                                <CardProduct
+                                    key={produk[id-1].id}
+                                    cardImg={produk[id-1].imgSrc}
+                                    title={produk[id-1].title}
+                                    writer={produk[id-1].writer}
+                                    qty={produk[id-1].stock}
+                                    payment={produk[id-1].price}
+                                    goToDetail={() => handleEdit(id)}
+                                    edit={() => handleEdit(id)}
+                                    delete={() => selectDelete(id)}
+                                />
+                            )
+                        })}
+                    </div>
                 </div>
                 <Modal
                     open={modal}
@@ -133,7 +135,7 @@ const Cart = () => {
                         <Button className="bg-red-800 font-bold py-2 px-5 rounded text-white" onClick={()=>handleDelete()}>Delete</Button>
                     </Box>
                 </Modal>
-                <div className='flex justify-between mt-16 px-4 pb-6'>
+                <div className='flex justify-between mt-8 px-4 pb-6'>
                     <p className='font-bold text-2xl flex items-start'>
                         Subtotal : <span className='ml-4 font-bold text-3xl'>$ {subTotal}</span>
                     </p>

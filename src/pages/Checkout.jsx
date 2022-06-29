@@ -4,7 +4,7 @@ import Layout from '../components/Layout'
 import { useState } from 'react'
 import useEffect from "react"
 import { useParams, useNavigate } from "react-router-dom"
-import Button from '../components/Button'
+import Button from '../components/button'
 import Biography from '../assets/biography.png'
 import Comic from '../assets/comic.jpg'
 import Novel from '../assets/novel.jpg'

@@ -8,7 +8,7 @@ import imgMagazine from "../assets/magazine.jpg"
 import imgEncy from "../assets/encyclopediajpg.jpg"
 import imgNovel from "../assets/novel.jpg"
 import imgTextBooks from "../assets/modern-physics.jpg"
-import { CartContext } from '../utils/context';
+import { TokenContext, CartContext } from '../utils/context';
 
 const Detailbooks = () => {
   const produkApi = [
@@ -92,7 +92,8 @@ const Detailbooks = () => {
         }
     ]
   const { cart,setCart } = useContext(CartContext);
-  
+  const {token} = useContext(TokenContext)
+
   const navigate = useNavigate()
   const [qty,setQty] = useState(1)
   const params = useParams()
@@ -109,6 +110,7 @@ const Detailbooks = () => {
   }
 
   const addToCart = () => {
+    if(token==='0'){navigate('/login')}
     if (qty > parseInt(produkApi[book_id-1].stock) || qty < 1) {
       setWrongInput("Incorrect input Please check again")
       ref.current.focus()
@@ -127,6 +129,7 @@ const Detailbooks = () => {
   }
 
   const updateToCart = () => {
+    if(token==='0'){navigate('/login')}
     console.log("update cart")
     navigate('/cart')
   }

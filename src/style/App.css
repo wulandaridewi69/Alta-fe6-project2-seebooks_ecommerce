@@ -87,9 +87,6 @@ circle {
 .footer {
   background-color: #19928a;
   height: 2rem;
-  position: fixed;
-  left: 0;
-  bottom: 0;
   width: 100%;
   text-align: center;
 }
