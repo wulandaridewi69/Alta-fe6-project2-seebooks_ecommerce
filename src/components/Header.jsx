@@ -43,8 +43,8 @@ const Header = () => {
                                 <input className='search w-full'></input>
                             </div>
                             <div className='col-3 flex gap-4 justify-end'>
-                                <Button onClick={()=>navigate('/login')}>Login</Button>
-                                <Button >Sign Up</Button>
+                                <Button className="border-[0.1rem] border-white rounded-md font-bold px-8 py-1 hover:bg-white hover:text-teal-600" onClick={()=>navigate('/login')}>Login</Button>
+                                <Button className="border-[0.1rem] rounded-md font-bold px-8 py-1 text-teal-600 bg-teal-50 hover:bg-teal-600 hover:text-slate-200" onClick={()=>navigate('/signup')}>Sign Up</Button>
                             </div>
                         </>
                     )}

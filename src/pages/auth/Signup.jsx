@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { TextField} from '@mui/material'
 import imgVector from '../../assets/5836 1.png'
 import { Link } from 'react-router-dom'
@@ -11,62 +11,119 @@ const Signup = () => {
 
     const [email,setEmail] = useState('')
     const [pwd, setPwd] = useState('')
+    const [name,setName] = useState('')
+    const [telp,setTelp] = useState('')
+    const [address, setAddress] = useState('')
+    const [isNameError,setIsNameError] = useState(false)
     const [isEmailError,setIsEmailError] = useState(false)
     const [isPwdError, setIsPwdError] = useState(false)
+    const [isTelpError, setIsTelpError] = useState(false)
+    const [isAddressError, setIsAddressError] = useState(false)
     const [loading, setLoading] = useState(false)
-    
-    useEffect(() => {
-        if (localStorage.getItem("userJwt")) {
-            navigate('/')
-        }
-    },[])
+
+    const handleName = (e) => {
+        const inputName = e.target.value
+        setName(inputName)
+        isNameError && setIsNameError(false)
+    }
 
     const handleEmail = (e) => {
         const inputEmail = e.target.value
         setEmail(inputEmail)
         isEmailError && setIsEmailError(false)
     }
-
-    const callSubmit = (e) => {
-        if (e.key === 'Enter') {
-            handleSubmit()
-        }
-    }
-
+    
     const handlePwd = (e) => {
         const inputPwd = e.target.value
         setPwd(inputPwd)
         isPwdError && setIsPwdError(false)
     }
     
+    const handleTelp = (e) => {
+        const inputTelp = e.target.value
+        setTelp(inputTelp)
+        isTelpError && setIsTelpError(false)
+    }
+
+    const handleAddress = (e) => {
+        const inputAddress = e.target.value
+        setAddress(inputAddress)
+        isAddressError && setIsAddressError(false)
+    }
+    
+    const callSubmit = (e) => {
+        if (e.key === 'Enter') {
+            handleSubmit()
+        }
+    }
+
     const handleSubmit = async () => {
-        const re = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-        if (re.test(email)) {
-            if (pwd !== '') {
-                setLoading(true)
-                const formData = new FormData()
-                formData.append('email',email)
-                formData.append('password', pwd)
-                axios.post('http://34.125.69.172/login', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    }
-                })
-                .then((res) => {
-                    localStorage.setItem("userJwt", JSON.stringify({ token: res.data.data.token, userId: res.data.data.user_id }))
-                    navigate('/')
-                })
-                .catch(() => {
-                    setIsEmailError(true)    
-                    setIsPwdError(true)    
-                })
-                .finally(()=>setLoading(false))
-            } else {
-                setIsPwdError(true)
-            }
+        const regEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+        const regName = /^[a-z0-9_-]{3,16}$/igm;
+        const regTelp = /^\d+$/
+        let passed = 0
+        
+        if (regEmail.test(email)) {
+            passed= passed+1
         } else {
             setIsEmailError(true)
         }
+
+        if (regName.test(name)) {
+            passed= passed+1
+        } else {
+            setIsNameError(true)
+        }
+        
+        if (regTelp.test(telp)) {
+            passed= passed+1
+        } else {
+            setIsTelpError(true)
+        }
+
+        if (pwd !== '') {
+            passed= passed+1
+        } else {
+            setIsPwdError(true)
+        }
+
+        if (address !== '') {
+            passed= passed+1
+        } else {
+            setIsAddressError(true)
+        }
+
+        if (passed === 5) {
+            setLoading(true)
+            const formData = new FormData()
+            formData.append("username",name)
+            formData.append("email",email)
+            formData.append("password",pwd)
+            formData.append("alamat",address)
+            formData.append("notelp",telp)
+            axios.post('http://34.125.69.172/users', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            })
+            .then((res) => {
+                console.log(res)    
+                navigate('/login')
+            })
+            .catch((err) => {
+                console.log(err)
+                setIsEmailError(true)    
+                setIsPwdError(true)
+                setIsNameError(true)
+                setIsTelpError(true)
+                setIsAddressError(true)
+            })
+            .finally(()=>setLoading(false))
+
+        } else {
+            console.log('gagal')
+        }
+        
     }
 
     if (loading) {
@@ -90,18 +147,30 @@ const Signup = () => {
                         <p className='font-bold text-4xl text-teal-600 self-center'>SIGN UP</p>
                         <div className='flex flex-col gap-3'>
                             <div className='flex flex-col gap-1'>
+                                <TextField id="Name" error={isNameError} type="text" value={name} label="Name" variant="outlined" onChange={(e) => handleName(e)} onKeyDown={(e) => callSubmit(e)} />
+                                {isNameError && <span className='text-xs text-red-600'>Make sure the fields Name are appropriate and have been filled</span>}
+                            </div>
+                            <div className='flex flex-col gap-1'>
                                 <TextField id="email" error={isEmailError} type="email" value={email} label="Email" variant="outlined" onChange={(e) => handleEmail(e)} onKeyDown={(e) => callSubmit(e)} />
-                                {isEmailError && <span className='text-xs text-red-600'>Please check your email again</span>}
+                                {isEmailError && <span className='text-xs text-red-600'>Make sure the fields email are appropriate and have been filled</span>}
                             </div>
                             <div className='flex flex-col gap-1'>
                                 <TextField id="password" error={isPwdError} type="password" value={pwd} label="Password" variant="outlined" onChange={(e) => handlePwd(e)} onKeyDown={(e) => callSubmit(e)} />
-                                {isPwdError && <span className='text-xs text-red-600'>Please check your password again</span>}
+                                {isPwdError && <span className='text-xs text-red-600'>Make sure the fields password are appropriate and have been filled</span>}
+                            </div>
+                            <div className='flex flex-col gap-1'>
+                                <TextField id="Telp" error={isTelpError} type="text" value={telp} label="Telp" variant="outlined" onChange={(e) => handleTelp(e)} onKeyDown={(e) => callSubmit(e)} />
+                                {isTelpError && <span className='text-xs text-red-600'>Make sure the fields Telp are appropriate and have been filled</span>}
+                            </div>
+                            <div className='flex flex-col gap-1'>
+                                <TextField id="Address" error={isAddressError} type="text" value={address} label="Address" variant="outlined" onChange={(e) => handleAddress(e)} onKeyDown={(e) => callSubmit(e)} />
+                                {isAddressError && <span className='text-xs text-red-600'>Make sure the fields Address are appropriate and have been filled</span>}
                             </div>
                         </div>
                         <div className='flex flex-col items-center font-bold'>
-                            <Button onClick={() => handleSubmit()}>Login</Button>
+                            <Button className="bg-teal-600 py-2 px-5 rounded text-white" onClick={() => handleSubmit()}>Signup</Button>
                             <p className='text-teal-600'>or</p>
-                            <Link className='underline text-teal-600' to={'/signUp'}>Create Account</Link>
+                            <Link className='underline text-teal-600' to={'/login'}>Login</Link>
                         </div>
                     </div>
                 </div>
