@@ -41,31 +41,39 @@ const Login = () => {
     
     const handleSubmit = async () => {
         const re = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+        let passed = 0
+
         if (re.test(email)) {
-            if (pwd !== '') {
-                setLoading(true)
-                const formData = new FormData()
-                formData.append('email',email)
-                formData.append('password', pwd)
-                axios.post('http://34.125.69.172/login', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    }
-                })
-                .then((res) => {
-                    localStorage.setItem("userJwt", JSON.stringify({ token: res.data.data.token, userId: res.data.data.user_id }))
-                    navigate('/')
-                })
-                .catch(() => {
-                    setIsEmailError(true)    
-                    setIsPwdError(true)    
-                })
-                .finally(()=>setLoading(false))
-            } else {
-                setIsPwdError(true)
-            }
+            passed+=1
         } else {
             setIsEmailError(true)
+        }
+
+        if (pwd !== '') {
+            passed+=1
+        } else {
+            setIsPwdError(true)
+        }
+
+        if (passed === 2) {
+            setLoading(true)
+            const formData = new FormData()
+            formData.append('email',email)
+            formData.append('password', pwd)
+            axios.post('http://34.125.69.172/login', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            })
+            .then((res) => {
+                localStorage.setItem("userJwt", JSON.stringify({ token: res.data.data.token, userId: res.data.data.user_id }))
+                navigate('/')
+            })
+            .catch(() => {
+                setIsEmailError(true)    
+                setIsPwdError(true)    
+            })
+            .finally(()=>setLoading(false))
         }
     }
 
@@ -99,9 +107,9 @@ const Login = () => {
                             </div>
                         </div>
                         <div className='flex flex-col items-center font-bold'>
-                            <Button onClick={() => handleSubmit()}>Login</Button>
+                            <Button className="bg-teal-600 py-2 px-5 rounded text-white" onClick={() => handleSubmit()}>Login</Button>
                             <p className='text-teal-600'>or</p>
-                            <Link className='underline text-teal-600' to={'/signUp'}>Create Account</Link>
+                            <Link className='underline text-teal-600' to={'/signup'}>Create Account</Link>
                         </div>
                     </div>
                 </div>
