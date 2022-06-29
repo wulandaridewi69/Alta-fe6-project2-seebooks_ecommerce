@@ -35,7 +35,7 @@ const Header = () => {
                                 </button>
                                 <ul className="absolute hidden text-gray-700 pt-1 group-hover:block w-full">
                                     <li className="text-white">
-                                        <div className="bg-teal-600 hover:bg-teal-900 py-2 px-4 block whitespace-no-wrap cursor-pointer">Profile</div>
+                                        <div className="bg-teal-600 hover:bg-teal-900 py-2 px-4 block whitespace-no-wrap cursor-pointer" onClick={()=>navigate('/profile')}>Profile</div>
                                     </li>
                                     <li className="text-white">
                                         <div className="bg-teal-600 hover:bg-teal-900 py-2 px-4 block whitespace-no-wrap cursor-pointer" onClick={()=>handleLogout()}>LogOut</div>
