@@ -14,7 +14,7 @@ import imgTextBooks from "../assets/modern-physics.jpg"
 const Homepage = () => {
 
     // dummy api
-    const categoryApi = ['Novel', 'Fiction', 'Comic', 'Textbook', 'History', 'Horror']
+    const categoryApi = [' Novel','Magazine','Comic','Textbook','Biography','Encyclopedia']
     const produk = [
         {
             id:1,
@@ -124,7 +124,7 @@ const Homepage = () => {
                 ))}
             </div>
             <div className="flex justify-center my-6">
-                <Button>Load More</Button>
+                <Button className="bg-teal-600 py-2 px-5 rounded text-white">Load More</Button>
             </div>
         </Layout>
     )
