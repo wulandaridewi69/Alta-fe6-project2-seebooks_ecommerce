@@ -6,14 +6,10 @@ import Homepage from "../pages/Homepage";
 import Login from "../pages/auth/Login";
 import Detailbook from "../pages/Detailbook";
 import Signup from "../pages/auth/Signup";
-<<<<<<< HEAD
 import Cart from "../pages/Cart";
 import Checkout from "../pages/Checkout";
 import Fail from "../components/Failed";
-=======
-import Checkout from "../pages/Checkout";
 import Profile from "../pages/Profile";
->>>>>>> 16865351cc589c81a498d187f6c7c3b5fe224b86
 
 const Router = () => {
     const [token, setToken] = useState(null);
