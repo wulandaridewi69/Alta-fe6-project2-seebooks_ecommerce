@@ -4,7 +4,7 @@ import '../style/App.css'
 const Footer = (props) => {
     return (
       <footer className='footer'>
-        <h5 className='text-white py-2 font-bold'>©  Copyright SEEBOOKS. All Right Reserved.</h5>
+        <h5 className='text-white py-2 font-bold h-8'>©  Copyright SEEBOOKS. All Right Reserved.</h5>
         </footer>
     );
   
