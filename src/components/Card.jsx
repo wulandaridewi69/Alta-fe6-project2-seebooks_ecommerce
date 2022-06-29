@@ -2,7 +2,7 @@ import React from 'react'
 
 export const CardBook = (props) => {
   return (
-    <div className='bg-white shadow-lg rounded-lg overflow-hidden pb-4'>
+    <div className='bg-white shadow rounded-lg overflow-hidden pb-4 flex flex-col justify-between'>
         <div className=''>
             <div className='h-64 flex justify-center cursor-pointer' onClick={()=>props.goToDetail()}>
                 <img src={props.cardImg} className="h-full" alt="" />
@@ -21,7 +21,8 @@ export const CardBook = (props) => {
                     <p>Price</p>{`$ ${(parseInt(props.price)).toLocaleString()}`}
                 </div>
             </div>
-        </div>  
+          </div>
+        <div>  
           {props.edit &&
               <div className='flex my-2 px-2'>
                   <button className='w-full bg-teal-600  px-4 text-white font-bold rounded' onClick={props.edit}>Edit</button>
@@ -32,16 +33,17 @@ export const CardBook = (props) => {
               <div className='flex px-2'>
                   <button className='w-full bg-red-800  px-4 text-white font-bold rounded' onClick={props.delete}>Delete</button>
               </div>
-          }  
+            }
+        </div>    
     </div>
   )
 }
 
 export const CardProduct = (props) => {
   return (
-    <div className='bg-white shadow-lg rounded-lg overflow-hidden pb-4'>
+    <div className='bg-white shadow-lg rounded-lg overflow-hidden pb-4 flex flex-col justify-between'>
         <div className=''>
-            <div className='h-64 flex justify-center'>
+            <div className='h-64 flex justify-center cursor-pointer' onClick={()=>props.goToDetail()}>
                 <img src={props.cardImg} className="h-full" alt="" />
             </div>
             <div className='p-2 pb-0'>
@@ -58,7 +60,8 @@ export const CardProduct = (props) => {
                     <p>Payment</p>{`$ ${(parseInt(props.payment)).toLocaleString()}`}
                 </div>
             </div>
-        </div>  
+        </div>
+        <div className=''>  
           {props.edit &&
               <div className='flex my-2 px-2'>
                   <button className='w-full bg-teal-600  px-4 text-white font-bold rounded' onClick={props.edit}>Edit</button>
@@ -69,7 +72,8 @@ export const CardProduct = (props) => {
               <div className='flex px-2'>
                   <button className='w-full bg-red-800  px-4 text-white font-bold rounded' onClick={props.delete}>Delete</button>
               </div>
-          }  
+              }
+        </div>    
     </div>
   )
 }

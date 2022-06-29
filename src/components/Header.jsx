@@ -28,7 +28,7 @@ const Header = () => {
                                 <input className='w-full text-black p-1 rounded-r-md'></input>
                             </div>
                             <div className='col-1 flex justify-center'>
-                                <img src={Cart} className='cursor-pointer' alt=''/>
+                                <img src={Cart} className='cursor-pointer' alt='' onClick={()=>navigate('/cart')}/>
                             </div>
                             <div className='col-1 group inline-block relative cursor-pointer text-center'>
                                 <button className="h-12 w-12 bg-white rounded-full hover:bg-teal-900 cursor-pointer text-white">

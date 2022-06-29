@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import { TextField} from '@mui/material'
+import React, { useState, useContext } from "react";
+import { TextField } from '@mui/material'
 import imgVector from '../../assets/5836 1.png'
 import { Link, Navigate } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
@@ -63,10 +63,9 @@ const Login = () => {
                 }
             })
             .then((res) => {
-                const { token } = res.data;
+                const { token } = res.data.data;
                 localStorage.setItem("token", token);
                 setToken(token);
-                navigate('/')
             })
             .catch(() => {
                 setIsEmailError(true)    

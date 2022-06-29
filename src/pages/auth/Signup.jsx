@@ -1,11 +1,12 @@
 import React, { useState,useContext } from 'react'
-import { TextField} from '@mui/material'
+import { TextField,Modal,Box} from '@mui/material'
 import imgVector from '../../assets/5836 1.png'
 import { Link, Navigate } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { TokenContext } from '../../utils/context'
 import axios from 'axios'
 import Button from '../../components/button'
+import Passed from "../../components/Passed";
 
 const Signup = () => {
     const navigate = useNavigate()
@@ -22,6 +23,8 @@ const Signup = () => {
     const [isTelpError, setIsTelpError] = useState(false)
     const [isAddressError, setIsAddressError] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [modal, setModal] = useState(false)
+
 
     const handleName = (e) => {
         const inputName = e.target.value
@@ -110,7 +113,7 @@ const Signup = () => {
             })
             .then((res) => {
                 console.log(res)    
-                navigate('/login')
+                setModal(true)
             })
             .catch((err) => {
                 console.log(err)
@@ -128,6 +131,8 @@ const Signup = () => {
         
     }
 
+    const closeModal = () => navigate('/login')
+
     if (token === "0") {
         if (loading) {
             return (
@@ -138,6 +143,14 @@ const Signup = () => {
         } else {
             return (
                 <div className='flex min-h-screen items-center p-5'>
+                    <Modal
+                        open={modal}
+                        onClose={closeModal}>
+                        <Box className="w-1/2 min-h-1/2 translate-x-1/2 translate-y-1/4 bg-white flex flex-col justify-center rounded-lg items-center shadow-2xl p-5 gap-3" >
+                            <Passed />
+                            <Button className="bg-teal-600 py-2 px-5 rounded text-white" onClick={()=>closeModal()}>Go to login</Button>
+                        </Box>
+                    </Modal>
                     <div className='basis-full flex flex-col pl-5 cursor-pointer' onClick={() => navigate('/')}>
                         <div>
                             <p className='text-8xl font-bold text-teal-600'>SEEBOOKS</p>
