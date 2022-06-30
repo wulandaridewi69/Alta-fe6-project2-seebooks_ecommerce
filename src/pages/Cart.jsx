@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import Button from "../components/Button"
 import Layout from "../components/Layout"
@@ -25,7 +25,7 @@ const Cart = () => {
     
     const produk = [
         {
-            id:1,
+            id: 1,
             imgSrc: imgComic,
             title: "Dark Crisis",
             writer: "DC Comic",
@@ -33,7 +33,7 @@ const Cart = () => {
             price: "10"
         },
         {
-            id:2,
+            id: 2,
             imgSrc: imgBiography,
             title: "Mind Afire",
             writer: "Abigail Samoun",
@@ -41,7 +41,7 @@ const Cart = () => {
             price: "50"
         },
         {
-            id:3,
+            id: 3,
             imgSrc: imgMagazine,
             title: "Savoy",
             writer: "Savoy",
@@ -49,7 +49,7 @@ const Cart = () => {
             price: "10"
         },
         {
-            id:4,
+            id: 4,
             imgSrc: imgEncy,
             title: "Brytannica Allnew",
             writer: "Christopher Lyliod",
@@ -57,7 +57,7 @@ const Cart = () => {
             price: "50"
         },
         {
-            id:5,
+            id: 5,
             imgSrc: imgNovel,
             title: "Layangan Putus",
             writer: "Momy Asf",
@@ -65,7 +65,7 @@ const Cart = () => {
             price: "5"
         },
         {
-            id:6,
+            id: 6,
             imgSrc: imgTextBooks,
             title: "Modern Physics in the universe of madnesss",
             writer: "Kenneth Krane",
@@ -125,7 +125,56 @@ const Cart = () => {
         .finally(() => setLoading(false))
         setModal(false)
     }
-    
+
+    const postCart = (id) => {
+        console.log('postCart');
+        let axios = require('axios');
+        let FormData = require('form-data');
+        let data = new FormData();
+        data.append('quantity', '1');
+        data.append('price', '1');
+
+        let config = {
+            method: 'post',
+            url: `http://34.125.69.172/carts/${id}`,
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                ...data.getHeaders()
+            },
+            data: data
+        };
+
+        axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    const getCart = (id) => {
+        console.log('getCart');
+        let axios = require('axios');
+
+        let config = {
+            method: 'get',
+            url: `http://34.125.69.172/orders/${id}`,
+            headers: {
+                'Authorization': 'Bearer ' + token,
+            }
+        };
+
+        axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+    }
+
     if (token !== "0") {
         if (loading) {
             return (
