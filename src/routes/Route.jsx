@@ -10,6 +10,9 @@ import Cart from "../pages/Cart";
 import Checkout from "../pages/Checkout";
 import Fail from "../components/Failed";
 import Profile from "../pages/Profile";
+import CreateProduct from "../pages/CreateProduct";
+import ProductList from "../pages/ProductList";
+import Histories from "../pages/History";
 
 const Router = () => {
     const [token, setToken] = useState(null);
@@ -35,20 +38,22 @@ const Router = () => {
         return (
         <TokenContext.Provider value={jwtToken}>
             <CartContext.Provider value={shopCart}>
-                <BrowserRouter>
-                    <Routes>
-                        <Route path="/login" element={<Login />}></Route>
-                        <Route path="/signup" element={<Signup />}></Route>
-                        <Route path="/" element={<Homepage />}></Route>
-                        <Route path="/:category" element={<Homepage />}></Route>
-                        <Route path="/detail/:book_id" element={<Detailbook />}></Route>
-                        <Route path="/cart" element={<Cart />}></Route>
-                        <Route path="/checkout" element={<Checkout />}></Route>
-                        <Route path="/profile" element={<Profile />}></Route>
-                        <Route path="*" element={<Fail />}></Route>
-                    </Routes>
-                </BrowserRouter>
-            </CartContext.Provider>    
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Homepage />}></Route>
+                    <Route path="/:category" element={<Homepage />}></Route>
+                    <Route path="/login" element={<Login />}></Route>
+                    <Route path="/signup" element={<Signup />}></Route>
+                    <Route path="/detail/:book_id" element={<Detailbook />}></Route>
+                    <Route path="/checkout" element={<Checkout />}></Route>
+                    <Route path="/profile" element={<Profile />}></Route>
+                    <Route path="/createproduct" element={<CreateProduct />}></Route>
+                    <Route path="/productlist" element={<ProductList />}></Route>
+                    <Route path="/histories" element={<Histories />}></Route>
+                    <Route path="*" element={<Fail />}></Route>
+                </Routes>
+            </BrowserRouter>
+            </CartContext.Provider>
         </TokenContext.Provider>
         )
     }
