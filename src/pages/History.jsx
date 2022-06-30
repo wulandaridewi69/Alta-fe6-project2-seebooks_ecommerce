@@ -71,21 +71,7 @@ const Histories = (props) => {
 
     return (
         <Layout>
-            <div className="container">
-                <div className="row">
-                    <div className='col-2 bg-slate-200'>
-                        <div className='product flex gap-x-5 mt-24'>
-                            <img src={Product} />
-                            <p>Products</p>
-                        </div>
-                        <br />
-                        <div className='history flex gap-x-5'>
-                            <img src={History} />
-                            <p>History</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </Layout>
     )
 }

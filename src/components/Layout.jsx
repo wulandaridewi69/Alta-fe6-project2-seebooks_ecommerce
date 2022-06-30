@@ -13,7 +13,7 @@ const Layout = (props) => {
               </div>
           </nav> */}
           <Header />
-          <div className='bg-white mx-6 flex-1'>
+          <div className='bg-white flex-1'>
               {props.children}
           </div>
           <Footer />
