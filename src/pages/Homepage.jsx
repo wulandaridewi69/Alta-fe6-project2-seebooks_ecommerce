@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
+import Button from "../components/Button"
 import Layout from "../components/Layout"
 import { CardBook } from "../components/Card"
 import axios from 'axios'
@@ -37,7 +38,7 @@ const Homepage = () => {
             }
         })
         .catch((err) => {
-            console.log(err)    
+            alert(err)    
         })
     }
 
@@ -95,17 +96,17 @@ const Homepage = () => {
             <Layout>
                 <div className="p-4">
                     <div className="flex gap-6">
-                        <div className="px-9 py-3 bg-teal-600 hover:bg-teal-900 cursor-pointer text-white rounded" onClick={() => handleNavigate('')}>
+                        <div className="px-9 py-3 bg-cyan-900 hover:bg-teal-600 cursor-pointer text-white rounded" onClick={() => handleNavigate('')}>
                             Books
                         </div>
                         <div className="group inline-block relative">
-                            <button className="px-4 py-3 bg-teal-600 hover:bg-teal-900 cursor-pointer text-white rounded h-full">
+                            <button className="px-4 py-3 bg-cyan-900 hover:bg-teal-600 cursor-pointer text-white rounded h-full">
                                 <span className="mr-20">Filter</span>▼
                             </button>
                             <ul className="absolute hidden text-gray-700 pt-1 group-hover:block w-full">
                                 {categorys.map((category, idx) => (
                                     <li className="text-white" key={idx}>
-                                        <div className="bg-teal-600 hover:bg-teal-900 py-2 px-4 block whitespace-no-wrap cursor-pointer" onClick={() => handleNavigate(category.name)}>{category.name}</div>
+                                        <div className="bg-cyan-900 hover:bg-teal-600 py-2 px-4 block whitespace-no-wrap cursor-pointer" onClick={() => handleNavigate(category.name)}>{category.name}</div>
                                     </li>
                                 ))}
                             </ul>

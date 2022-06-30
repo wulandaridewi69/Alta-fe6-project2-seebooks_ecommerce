@@ -20,9 +20,12 @@ import { useContext } from 'react'
 import { TokenContext } from '../utils/context'
 import axios from 'axios'
 import { CardProduct } from '../components/Card'
+import Delete from '../assets/delete-circle.png'
+import Edit from '../assets/edit.png'
+import UpdateProduct from './UpdateProduct'
 // import CardBook from '../components/Card'
 
-const ProductList = (props) => {
+const ProductList = ({remove, update}) => {
 
     const navigate = useNavigate()
     const { token } = useContext(TokenContext);
@@ -79,15 +82,23 @@ const ProductList = (props) => {
                                         {product.length > 0 ? (
                                             <div className="my-5 pt-0 p-4 grid grid-cols-2 xl:grid-cols-6 gap-4">
                                                 {product.map((item) => (
-                                                    <CardProduct
-                                                        key={item.id}
-                                                        cardImg={!item.img_url && 'https://eproc.lkpp.go.id/v3/img/no-picture.jpg'}
-                                                        title={item.title}
-                                                        writer={item.author}
-                                                        stock={item.stock}
-                                                        price={item.price}
-                                                        goToDetail={() => navigate(`../createproduct`, { replace: true })}
-                                                    />)
+                                                    // <CardProduct
+                                                    //     key={item.id}
+                                                    //     cardImg={!item.img_url && 'https://eproc.lkpp.go.id/v3/img/no-picture.jpg'}
+                                                    //     title={item.title}
+                                                    //     writer={item.author}
+                                                    //     stock={item.stock}
+                                                    //     price={item.price}
+                                                    //     goToDetail={() => navigate(`../createproduct`, { replace: true })}
+                                                    // />)
+                                                        <div className='col-2 border-4 border-gray-100 border-b-gray-400 rounded-xl'>
+                                                            <img src={!item.img_url && 'https://eproc.lkpp.go.id/v3/img/no-picture.jpg'} className='h-75 w-55 ' />
+                                                            <h5 className='font-semibold'>{ item.title}</h5>
+                                                            <p className='text-slate-800 text-xs'>{item.author}</p>
+                                                            <Button className='btn-green rounded justify-center text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-teal-500 hover:bg-teal-600 ... text-center text-base' text='Edit' onClick={() => navigate(`../updateproduct/${item.id}`, { replace: true })}>Edit</Button>
+                                                            <Button className='gap-y-2 roundedcenter btn-primary text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-rose-800 hover:bg-rose-600 ... text-center text-base' text='Delete Account'>Delete</Button>
+                                                        </div>
+                                                    )
                                                 )}
                                             </div>
                                         ) : (

@@ -7,39 +7,60 @@ import Photo from '../assets/profile.jpg'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useRef } from 'react'
-import axios from 'axios'
-import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { Navigate } from 'react-router'
-import { useNavigate } from 'react-router'
 import Sidebar from '../components/Sidebar'
+import axios from 'axios'
+import { useNavigate, useParams } from 'react-router'
 
-const CreateProduct = (props) => {
 
-    const [edit, setEdit] = useState({
-        id: '',
-        value: ''
-    });
+const UpdateProduct = (props) => {
+    const inputRef = useRef(null);
 
     const navigate = useNavigate()
+    const params = useParams()
+
+    const book_id = params.book_id
     const [listCategory, setListCategory] = useState()
-    const [loading,setLoading] = useState()
     const [title,setTitle] = useState('') 
     const [author,setAuthor] = useState('') 
     const [description,setDescription] = useState('') 
     const [pages,setPages] = useState('') 
-    const [category,setCategorys] = useState('') 
+    const [category,setCategories] = useState('') 
     const [isbn,setIsbn] = useState('') 
     const [publisher,setPublisher] = useState('') 
     const [price,setPrice] = useState('') 
     const [stock,setStock] = useState('') 
-    
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
-       fetchCategory() 
-    },[])
+        fetchDetailBook()
+    }, []);
+
+    const fetchDetailBook = () => {
+        axios.get(`http://34.125.69.172/books/${book_id}`)
+        .then((res) => {
+            const data = res.data
+            setTitle(data.data.title);
+            setAuthor(data.data.author);
+            setCategories(data.data.categories);
+            setDescription(data.data.description);
+            setPages(data.data.pages);
+            setIsbn(data.data.isbn);
+            setPublisher(data.data.publisher);
+            setPrice(data.data.price);
+            setStock(data.data.stock);
+            setLoading(false);
+        })
+        .catch((err) => {
+            if (err.response.status === 400) {
+            navigate(`/detail/${book_id}/Not Found`)
+            }
+        })
+        .finally(() => fetchCategory())
+    }
 
     const fetchCategory = () => {
         axios.get('http://34.125.69.172/categories')
@@ -53,8 +74,6 @@ const CreateProduct = (props) => {
             })
             .finally(()=>setLoading(false))
     }
-
-    const inputRef = useRef(null);
 
     const handleChange = (e, type) => {
         const val = e.target.value
@@ -78,7 +97,7 @@ const CreateProduct = (props) => {
     }
 
     const handleCategory = (e) => {
-        setCategorys(e.target.value)
+        setCategories(e.target.value)
     }
 
     const handleSubmit = () => {
@@ -89,19 +108,19 @@ const CreateProduct = (props) => {
         description !== '' ?  passed = passed+1 : setDescription('added')
         pages !== '' ?  passed = passed+1 : setPages('added')
         isbn !== '' ?  passed = passed+1 : setIsbn('added')
-        category !== '' ?  passed = passed+1 : setCategorys('Biography')
+        category !== '' ?  passed = passed+1 : setCategories('Biography')
         publisher !== '' ?  passed = passed+1 : setPublisher('added')
         price !== '' ?  passed = passed+1 : setPrice('added')
         stock !== '' ? passed = passed + 1 : setStock('added')
         
         if (passed === 8) {
-            postProduct()
+            putProduct()
         } else {
             alert('field tidak boleh kosong!')
         }
     }
 
-    const postProduct = () => {
+    const putProduct = () => {
         const formData = new FormData()
         formData.append(title)
         formData.append(author)
@@ -111,7 +130,7 @@ const CreateProduct = (props) => {
         formData.append(publisher)
         formData.append(price)
         formData.append(stock)
-        axios.post('http://34.125.69.172/books', formData, {
+        axios.put('http://34.125.69.172/books', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }
@@ -230,6 +249,7 @@ const CreateProduct = (props) => {
             </Layout>
         )
     }
+
 }
 
-export default CreateProduct
+export default UpdateProduct;

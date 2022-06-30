@@ -49,7 +49,6 @@
 }
 
 .header {
-  background-color: #19928a;
   height: 4rem;
   color: #ffffff;
 }
@@ -85,7 +84,6 @@ circle {
 }
 
 .footer {
-  background-color: #19928a;
   height: 2rem;
   width: 100%;
   text-align: center;
