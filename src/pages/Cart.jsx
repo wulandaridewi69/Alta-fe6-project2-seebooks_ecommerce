@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
-import Button from "../components/button"
+import Button from "../components/Button"
 import Layout from "../components/Layout"
 import { CardProduct } from "../components/Card"
 import imgComic from "../assets/comic.jpg"

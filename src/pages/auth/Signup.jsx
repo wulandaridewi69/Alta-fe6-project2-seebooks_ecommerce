@@ -5,7 +5,7 @@ import { Link, Navigate } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { TokenContext } from '../../utils/context'
 import axios from 'axios'
-import Button from '../../components/button'
+import Button from '../../components/Button'
 import Passed from "../../components/Passed";
 
 const Signup = () => {
@@ -116,7 +116,7 @@ const Signup = () => {
                 setModal(true)
             })
             .catch((err) => {
-                console.log(err)
+                alert(err)
                 setIsEmailError(true)    
                 setIsPwdError(true)
                 setIsNameError(true)

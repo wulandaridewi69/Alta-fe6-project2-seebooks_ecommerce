@@ -4,7 +4,7 @@ import imgVector from '../../assets/5836 1.png'
 import { Link, Navigate } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import Button from '../../components/button'
+import Button from '../../components/Button'
 import { TokenContext } from "../../utils/context";
 
 const Login = () => {
@@ -65,6 +65,7 @@ const Login = () => {
             .then((res) => {
                 const { token } = res.data.data;
                 localStorage.setItem("token", token);
+                localStorage.setItem("idUser",res.data.data.user_id)
                 setToken(token);
             })
             .catch(() => {
