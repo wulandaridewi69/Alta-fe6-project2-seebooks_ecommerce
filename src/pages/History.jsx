@@ -5,6 +5,7 @@ import Photo from '../assets/profile.jpg'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useRef } from 'react'
+import Sidebar from '../components/Sidebar'
 
 const History = (props) => {
 
@@ -24,8 +25,6 @@ const History = (props) => {
     useEffect(() => {
         if (props.edit) {
             inputRef.current.focus();
-        } else {
-            inputRef.current.blur();
         }
     })
 
@@ -69,9 +68,61 @@ const History = (props) => {
 
     return (
         <Layout>
+            <div className='container'>
+                <div className='row'>
+                    <div className='col-2'>
+                        <Sidebar />
+                    </div>
+                    <div className='col-10'>
+                        <div className='p-3 mb-3 text-2xl font-bold'>
+                            History
+                        </div>
+                        <div className='container'>
+                            <div className='row'>
+                                <div className='col-6'>
+                                    <div>
+                                        <p>25-06-2022</p>
+                                        <h4>Modern Physics</h4>
+                                        <p>Kenneth Krane</p>
+                                        <br />
+                                        <p>5 item</p>
+                                    </div>
+                                </div>
+                                <div className='col-2'>
+                                    $ 200
+                                </div>
+                                <div className='col-2'>
+                                    <Button className>Complete</Button>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div className='container'>
+                            <div className='row'>
+                                <div className='col-6'>
+                                    <div>
+                                        <p>25-06-2022</p>
+                                        <h4>Modern Physics</h4>
+                                        <p>Kenneth Krane</p>
+                                        <br />
+                                        <p>5 item</p>
+                                    </div>
+                                </div>
+                                <div className='col-2'>
+                                    $ 200
+                                </div>
+                                <div className='col-2'>
+                                    <Button>Complete</Button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                </div>
+                </div>
         </Layout>
-    )
+        )
+
 }
 
 export default History;
