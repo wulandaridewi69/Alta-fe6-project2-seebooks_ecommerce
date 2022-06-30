@@ -22,7 +22,7 @@ const Header = () => {
                 <div className='flex items-center py-2 gap-4'>
                     {token !== '0' ? (
                         <>
-                            <div className='col-6 '>
+                            <div className='col-6 flex'>
                                 <h1 className='logo font-bold text-4xl cursor-pointer' onClick={()=>navigate('/')}>SEEBOOKS</h1>
                             </div>
                             <div className='col-4 flex'>
