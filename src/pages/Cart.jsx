@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
-import Button from "../components/button"
+import Button from "../components/Button"
 import Layout from "../components/Layout"
 import { CardProduct } from "../components/Card"
 import imgComic from "../assets/comic.jpg"
@@ -9,12 +9,11 @@ import imgMagazine from "../assets/magazine.jpg"
 import imgEncy from "../assets/encyclopediajpg.jpg"
 import imgNovel from "../assets/novel.jpg"
 import imgTextBooks from "../assets/modern-physics.jpg"
-import { TokenContext, CartContext } from "../utils/context";
+import { TokenContext } from "../utils/context";
 import { Modal,Box } from '@mui/material'
 
 const Cart = () => {
     const { token } = useContext(TokenContext);
-    const { cart,setCart } = useContext(CartContext);
     const navigate = useNavigate()
 
     const [data, setData] = useState([]);
@@ -72,15 +71,6 @@ const Cart = () => {
         }
     ]
 
-    useEffect(() => {
-        setData(cart)
-        console.log(cart)
-    }, [])
-    
-    useEffect(()=> {
-        setData(cart)
-    },[cart])
-
     let subTotal = 0
 
     const handleEdit = (idx) => {
@@ -91,15 +81,6 @@ const Cart = () => {
         setSelected(id)
     }
     const handleDelete = () => {
-        const indexDel = cart.findIndex((search) => search === selected)
-        const temp = cart.slice()
-        temp.splice(indexDel, 1)
-        if (temp.length === 0) {
-            localStorage.removeItem('cart')
-        } else {
-            localStorage.setItem('cart',JSON.stringify(temp))
-        }
-        setCart(temp)
         setModal(false)
     }
     
@@ -109,19 +90,19 @@ const Cart = () => {
                 <div className='p-4'>
                     <p className='font-bold text-2xl'>Shopping Cart</p>
                     <div className="mt-5 grid grid-cols-2 xl:grid-cols-6 gap-4">
-                        {data.map((id) => {
-                            subTotal += parseInt(produk[id-1].price)
+                        {produk.map((item) => {
+                            subTotal += parseInt(item.price)
                             return (
                                 <CardProduct
-                                    key={produk[id-1].id}
-                                    cardImg={produk[id-1].imgSrc}
-                                    title={produk[id-1].title}
-                                    writer={produk[id-1].writer}
-                                    qty={produk[id-1].stock}
-                                    payment={produk[id-1].price}
-                                    goToDetail={() => handleEdit(id)}
-                                    edit={() => handleEdit(id)}
-                                    delete={() => selectDelete(id)}
+                                    key={item.id}
+                                    cardImg={item.imgSrc}
+                                    title={item.title}
+                                    writer={item.writer}
+                                    qty={item.stock}
+                                    payment={item.price}
+                                    goToDetail={() => handleEdit(item.id)}
+                                    edit={() => handleEdit(item.id)}
+                                    delete={() => selectDelete(item.id)}
                                 />
                             )
                         })}

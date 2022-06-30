@@ -1,21 +1,19 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TokenContext,CartContext } from '../utils/context';
+import { TokenContext } from '../utils/context';
 import Cart from '../assets/cart.png';
 import '../style/App.css'
 import Search from '../assets/search.png'
-import Button from './button';
+import Button from './Button';
 
 const Header = () => {
     const navigate = useNavigate()
-    const { token,setToken } = useContext(TokenContext);    
-    const { setCart } = useContext(CartContext);    
+    const { token,setToken } = useContext(TokenContext);     
 
     const handleLogout = () => {
         localStorage.removeItem("token");
         setToken("0");
-        localStorage.removeItem("cart");
-        setCart([]);
+        localStorage.removeItem("idUser");
         navigate('/login')
     }
     return (
