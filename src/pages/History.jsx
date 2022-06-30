@@ -6,8 +6,13 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { useRef } from 'react'
 import Sidebar from '../components/Sidebar'
+// import { useRouter } from 'next/router'
+import { TokenContext } from "../utils/context";
+import { useContext } from 'react'
 
 const History = (props) => {
+
+    const { token } = useContext(TokenContext);
 
     const [date, setDate] = useState('');
     const [title, setTitle] = useState('');
@@ -18,7 +23,7 @@ const History = (props) => {
 
     useEffect(() => {
         const getHistory = async () => {
-            const response = await fetch(`http://localhost:3001/api/v1/history`);
+            const response = await fetch(`http://34.125.69.172/books/users`);
             const data = await response.json();
             setDate(data.data.date);
             setTitle(data.data.title);
@@ -29,6 +34,28 @@ const History = (props) => {
         }
         getHistory();
     })
+
+    const getHistory = () => {
+        console.log('getHistory');
+        let axios = require('axios');
+
+        let config = {
+            method: 'get',
+            url: 'http://34.125.69.172/books/users',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+            }
+        };
+
+        axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
 
     return (
         <Layout>
@@ -60,7 +87,7 @@ const History = (props) => {
                                 </div>
                             </div>
                         </div>
-                        <br/>
+                        <br />
                         <div className='container'>
                             <div className='row'>
                                 <div className='col-6'>
@@ -102,9 +129,9 @@ const History = (props) => {
                     </div>
 
                 </div>
-                </div>
+            </div>
         </Layout>
-        )
+    )
 
 }
 
