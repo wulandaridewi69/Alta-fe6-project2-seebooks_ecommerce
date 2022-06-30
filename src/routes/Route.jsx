@@ -8,6 +8,9 @@ import Detailbook from "../pages/Detailbook";
 import Signup from "../pages/auth/Signup";
 import Checkout from "../pages/Checkout";
 import Profile from "../pages/Profile";
+import CreateProduct from "../pages/CreateProduct";
+import ProductList from "../pages/ProductList";
+import Histories from "../pages/History";
 
 const Router = () => {
     const [token, setToken] = useState(null);
@@ -29,6 +32,9 @@ const Router = () => {
                     <Route path="/detail/:book_id" element={<Detailbook />}></Route>
                     <Route path="/checkout" element={<Checkout />}></Route>
                     <Route path="/profile" element={<Profile />}></Route>
+                    <Route path="/createproduct" element={<CreateProduct />}></Route>
+                    <Route path="/productlist" element={<ProductList />}></Route>
+                    <Route path="/histories" element={<Histories />}></Route>
                 </Routes>
             </BrowserRouter>
         </TokenContext.Provider>

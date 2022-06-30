@@ -4,7 +4,7 @@ import { TokenContext } from '../utils/context';
 import Cart from '../assets/cart.png';
 import '../style/App.css'
 import Search from '../assets/search.png'
-import Button from '../components/Button';
+import Button from './Button';
 
 const Header = () => {
     const navigate = useNavigate()

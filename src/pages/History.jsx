@@ -1,0 +1,93 @@
+import React from 'react'
+import Product from '../assets/products.png'
+import History from '../assets/history.png'
+import Layout from '../components/Layout'
+import Button from '../components/Button'
+import Photo from '../assets/profile.jpg'
+import { useState } from 'react'
+import { useEffect } from 'react'
+import { useRef } from 'react'
+
+const Histories = (props) => {
+
+    const [edit, setEdit] = useState({
+        id: '',
+        value: ''
+    });
+
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [phone, setPhone] = useState('');
+    const [address, setAddress] = useState('');
+
+    const inputRef = useRef(null);
+
+    useEffect(() => {
+        if (props.edit) {
+            inputRef.current.focus();
+        } else {
+            inputRef.current.blur();
+        }
+    })
+
+    const handleChange = (e, type) => {
+        setUsername(e.target.value);
+        setEmail(e.target.value);
+        setPassword(e.target.value);
+        setPhone(e.target.value);
+        setAddress(e.target.value);
+        console.log(e.target.value);
+    }
+
+    const complete = () => {
+        setEdit({
+            id: '',
+            value: ''
+        });
+        props.setEdit(false);
+    }
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        props.onSubmit({
+            id: props.edit ? props.edit.id : null,
+        });
+        setUsername('');
+        setEmail('');
+        setPassword('');
+        setPhone('');
+        setAddress('');
+    }
+
+    const submitUpdate = (value) => {
+        // updateProfile(edit.id, value);
+        setEdit({
+            id: '',
+            value: ''
+        })
+    };
+
+    return (
+        <Layout>
+            <div className="container">
+                <div className="row">
+                    <div className='col-2 bg-slate-200'>
+                        <div className='product flex gap-x-5 mt-24'>
+                            <img src={Product} />
+                            <p>Products</p>
+                        </div>
+                        <br />
+                        <div className='history flex gap-x-5'>
+                            <img src={History} />
+                            <p>History</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Layout>
+    )
+}
+
+export default Histories;

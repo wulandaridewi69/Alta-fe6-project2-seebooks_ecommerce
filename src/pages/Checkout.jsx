@@ -81,7 +81,7 @@ const Checkout = () => {
                     <div className='row'>
                         <div className='col-6'>
                             <div className='p-3 mb-3 text-2xl font-bold'>
-                                CHECKOUT
+                                Checkout
                             </div>
                             <fieldset className='px-2 border-slate-300'>
                                 <legend className='legend'>Address</legend>
