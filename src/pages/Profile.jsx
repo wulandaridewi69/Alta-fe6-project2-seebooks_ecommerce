@@ -144,7 +144,7 @@ const Profile = () => {
             axios.put(`http://34.125.69.172/users/${iduser}`, formData, {
                 headers: {
                     'accept': 'application/json',
-                    'Content-Type': 'aplication/json',
+                    'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`
                 }
             })
