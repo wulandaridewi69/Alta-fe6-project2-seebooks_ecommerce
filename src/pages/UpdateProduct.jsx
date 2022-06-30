@@ -7,32 +7,42 @@ import Photo from '../assets/profile.jpg'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useRef } from 'react'
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import Sidebar from '../components/Sidebar'
+import axios from 'axios'
+import { useNavigate, useParams } from 'react-router'
 
 
 const UpdateProduct = (props) => {
     const inputRef = useRef(null);
 
-    const [Title, setTitle] = useState('');
-    const [author, setAuthor] = useState('');
-    const [categories, setCategories] = useState('');
-    const [description, setDescription] = useState('');
-    const [pages, setPages] = useState('');
-    const [isbn, setIsbn] = useState('');
-    const [publisher, setPublisher] = useState('');
-    const [price, setPrice] = useState('');
-    const [stock, setStock] = useState('');
-    const [image, setImage] = useState('');
-    const [submit, setSubmit] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
-    const [edit, setEdit] = useState('');
+    const navigate = useNavigate()
+    const params = useParams()
 
+    const book_id = params.book_id
+    const [listCategory, setListCategory] = useState()
+    const [title,setTitle] = useState('') 
+    const [author,setAuthor] = useState('') 
+    const [description,setDescription] = useState('') 
+    const [pages,setPages] = useState('') 
+    const [category,setCategories] = useState('') 
+    const [isbn,setIsbn] = useState('') 
+    const [publisher,setPublisher] = useState('') 
+    const [price,setPrice] = useState('') 
+    const [stock,setStock] = useState('') 
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const getProduct = async (id) => {
-            const response = await fetch(`http://localhost:3001/api/v1/products/${id}`);
-            const data = await response.json();
+        fetchDetailBook()
+    }, []);
+
+    const fetchDetailBook = () => {
+        axios.get(`http://34.125.69.172/books/${book_id}`)
+        .then((res) => {
+            const data = res.data
             setTitle(data.data.title);
             setAuthor(data.data.author);
             setCategories(data.data.categories);
@@ -42,122 +52,203 @@ const UpdateProduct = (props) => {
             setPublisher(data.data.publisher);
             setPrice(data.data.price);
             setStock(data.data.stock);
-            setImage(data.data.image);
             setLoading(false);
-        }
-        getProduct();
-    }, []);
-
-    const updateProduct = async () => {
-        
-    }
-
-    const handleChange = async () => {
-
-    }
-    const handleSubmit = async () => {
-    }
-
-    const complete = () => {
-        setEdit({
-            id: '',
-            value: ''
-        });
-        props.setEdit(false);
-    }
-
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     props.onSubmit({
-    //         id: props.edit ? props.edit.id : null,
-    //     });
-    //     setedit('');
-    //     setEmail('');
-    //     setPassword('');
-    //     setPhone('');
-    //     setAddress('');
-    // }
-
-    const submitUpdate = (value) => {
-        // updateProfile(edit.id, value);
-        setEdit({
-            id: '',
-            value: ''
         })
-    };
+        .catch((err) => {
+            if (err.response.status === 400) {
+            navigate(`/detail/${book_id}/Not Found`)
+            }
+        })
+        .finally(() => fetchCategory())
+    }
 
-    return (
-        <Layout>
-            <div className='container'>
-                <div className='row'>
-                    <div className='col-2 bg-slate-200'>
-                        <Sidebar />
-                    </div>
-                    <div className='col-5'>
-                        <div className='p-3 mb-3 text-2xl font-bold'>
-                            Update Product
+    const fetchCategory = () => {
+        axios.get('http://34.125.69.172/categories')
+            .then((res) => {
+                const { data } = res.data;
+                setListCategory(data)
+            })
+            .catch((err) => {
+                alert(err)
+                navigate('/err/server down')
+            })
+            .finally(()=>setLoading(false))
+    }
+
+    const handleChange = (e, type) => {
+        const val = e.target.value
+        if (type === 'title') {
+            setTitle(val)
+        } else if (type === 'author') {
+            setAuthor(val)
+        } else if (type === 'description') {
+            setDescription(val)
+        } else if (type === 'pages') {
+            setPages(val)
+        } else if (type === 'isbn') {
+            setIsbn(val)
+        } else if (type === 'publisher') {
+            setPublisher(val)
+        } else if (type === 'price') {
+            setPrice(val)
+        } else if (type === 'stock') {
+            setStock(val)
+        } 
+    }
+
+    const handleCategory = (e) => {
+        setCategories(e.target.value)
+    }
+
+    const handleSubmit = () => {
+        let passed = 0
+        
+        title !== '' ?  passed = passed+1 : setTitle('added')
+        author !== '' ?  passed = passed+1 : setAuthor('added')
+        description !== '' ?  passed = passed+1 : setDescription('added')
+        pages !== '' ?  passed = passed+1 : setPages('added')
+        isbn !== '' ?  passed = passed+1 : setIsbn('added')
+        category !== '' ?  passed = passed+1 : setCategories('Biography')
+        publisher !== '' ?  passed = passed+1 : setPublisher('added')
+        price !== '' ?  passed = passed+1 : setPrice('added')
+        stock !== '' ? passed = passed + 1 : setStock('added')
+        
+        if (passed === 8) {
+            putProduct()
+        } else {
+            alert('field tidak boleh kosong!')
+        }
+    }
+
+    const putProduct = () => {
+        const formData = new FormData()
+        formData.append(title)
+        formData.append(author)
+        formData.append(description)
+        formData.append(pages)
+        formData.append(isbn)
+        formData.append(publisher)
+        formData.append(price)
+        formData.append(stock)
+        axios.put('http://34.125.69.172/books', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+        }).then(() => {
+            navigate('/productlist')        
+        }).catch((err) => {
+            alert(err)
+        })
+    }
+
+    if (loading) {
+        return (
+            <div className='h-screen w-screen flex justify-center items-center'>
+                <div className='h-36 w-36 rounded-full bg-teal-600 animate-bounce'></div>
+            </div>
+        )
+    } else {
+        return (
+            <Layout>
+                <div className='container'>
+                    <div className='row'>
+                        <div className='col-2 bg-slate-200'>
+                            <div className='product flex gap-x-5 mt-24'>
+                                <img src={Product} />
+                                <p>Products</p>
+                            </div>
+                            <br />
+                            <div className='history flex gap-x-5'>
+                                <img src={History} />
+                                <p>History</p>
+                            </div>
                         </div>
-                        <form>
-                            <fieldset className='px-2 border-slate-300'>
-                                <legend className='legend'>Book Title</legend>
-                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "edit")} value={edit} className='form w-full input pb-2' placeholder='Physics' />
-                            </fieldset>
+                        <div className='col-5'>
+                            <div className='p-3 mb-3 text-2xl font-bold'>
+                                Create Product
+                            </div>
                             <br />
-                            <fieldset className='px-2 border-slate-300'>
-                                <legend className='legend'>Writer</legend>
-                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "edit")} value={edit} className='form w-full input pb-2' placeholder='Kenneth Krane' />
-                            </fieldset>
-                            <br />
-                            <fieldset className='px-2 border-slate-300'>
-                                <legend className='legend'>Description</legend>
-                                <textarea className='input w-full' ref={inputRef} name='text' onChange={(e) => handleChange(e, "address")} value={edit} placeholder='The wonders of the speed of light, of gravitational waves, of molecular motors explained. Be amazed by the motion of stones, light, stars, atoms, muscles and empty space. Interesting facts. Fascinating puzzles. Beautiful Images. Clear explanations.' />
-                            </fieldset>
-                            <br />
-                            <fieldset className='px-2 border-slate-300'>
-                                <legend className='legend'>Pages</legend>
-                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "edit")} value={edit} className='form w-full input pb-2' placeholder='1024' />
-                            </fieldset>
-                            <br />
-                            <fieldset className='px-2 border-slate-300 mb-4'>
-                                <legend className='legend'>ISBN</legend>
-                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "edit")} value={edit} className='form w-full input pb-2' placeholder='9386105268' />
-                            </fieldset>
-                        </form>
-                    </div>
-                    <div className='col-5'>
-                        <form className='pt-20'>
-                            <fieldset className='px-2 border-slate-300'>
-                                <legend className='legend'>Publisher</legend>
-                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "edit")} value={edit} className='form w-full input pb-2' placeholder='Griffith' />
-                            </fieldset>
-                            <br />
-                            <fieldset className='px-2 border-slate-300'>
-                                <legend className='legend'>Price</legend>
-                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "edit")} value={edit} className='form w-full input pb-2' placeholder='$ 21.58' />
-                            </fieldset>
-                            <br />
-                            <fieldset className='px-2 border-slate-300'>
-                                <legend className='legend'>Stock</legend>
-                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "edit")} value={edit} className='form w-full input pb-2' placeholder='10' />
-                            </fieldset>
-                            <br />
-                            <fieldset className='px-2 border-slate-300'>
+                            <div className='history flex gap-x-5'>
+                                <img src={History} />
+                                <p>History</p>
+                            </div>
+                            <form>
+                                <fieldset className='px-2 border-slate-300'>
+                                    <legend className='legend'>Book Title</legend>
+                                    <input ref={inputRef} name='text' onChange={(e) => handleChange(e, 'title')} value={title} className='form input pb-2' placeholder='Physics' />
+                                </fieldset>
+                                <br />
+                                <fieldset className='px-2 border-slate-300'>
+                                    <legend className='legend'>Writer</legend>
+                                    <input ref={inputRef} name='text' onChange={(e) => handleChange(e, 'author')} value={author} className='form input pb-2' placeholder='Kenneth Krane' />
+                                </fieldset>
+                                <br />
+                                <fieldset className='px-2 border-slate-300'>
+                                    <FormControl fullWidth>
+                                        <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                                        <Select
+                                            labelId="demo-simple-select-label"
+                                            id="demo-simple-select"
+                                            value={category}
+                                            label="Category"
+                                            onChange={(e)=>handleCategory(e)}
+                                        >
+                                            {listCategory.map((item,idx) => (
+                                                <MenuItem keys={idx} value={item.name}>{item.name}</MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
+                                </fieldset>
+                                <br />
+                                <fieldset className='px-2 border-slate-300'>
+                                    <legend className='legend'>Description</legend>
+                                    <textarea className='input w-full' ref={inputRef} name='text' onChange={(e) => handleChange(e, 'description')} value={description} placeholder='The wonders of the speed of light, of gravitational waves, of molecular motors explained. Be amazed by the motion of stones, light, stars, atoms, muscles and empty space. Interesting facts. Fascinating puzzles. Beautiful Images. Clear explanations.' />
+                                </fieldset>
+                                <br />
+                                <fieldset className='px-2 border-slate-300'>
+                                    <legend className='legend'>Pages</legend>
+                                    <input ref={inputRef} name='text' onChange={(e) => handleChange(e, 'pages')} value={pages} className='form input pb-2' placeholder='1024' />
+                                </fieldset>
+                                <br />
+                                <fieldset className='px-2 border-slate-300'>
+                                    <legend className='legend'>ISBN</legend>
+                                    <input ref={inputRef} name='text' onChange={(e) => handleChange(e, 'isbn')} value={isbn} className='form input pb-2' placeholder='9386105268' />
+                                </fieldset>
+                            </form>
+                        </div>
+                        <div className='col-5'>
+                            <div className='pt-20'>
+                                <fieldset className='px-2 border-slate-300'>
+                                    <legend className='legend'>Publisher</legend>
+                                    <input ref={inputRef} name='text' onChange={(e) => handleChange(e, 'publisher')} value={publisher} className='form input pb-2' placeholder='Griffith' />
+                                </fieldset>
+                                <br />
+                                <fieldset className='px-2 border-slate-300'>
+                                    <legend className='legend'>Price</legend>
+                                    <input ref={inputRef} name='text' onChange={(e) => handleChange(e, 'price')} value={price} className='form input pb-2' placeholder='$ 21.58' />
+                                </fieldset>
+                                <br />
+                                <fieldset className='px-2 border-slate-300'>
+                                    <legend className='legend'>Stock</legend>
+                                    <input ref={inputRef} name='text' onChange={(e) => handleChange(e, 'stock')} value={stock} className='form input pb-2' placeholder='10' />
+                                </fieldset>
+                                <br />
+                                {/* <fieldset className='px-2 border-slate-300'>
                                 <legend className='legend'>Upload Image</legend>
                                 <label for='myfile'>Choose File</label>
-                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "edit")} input='file' id='myFile' multiple value={edit} className='form w-full input pb-2' placeholder='Upload' />
-                            </fieldset>
-                        </form>
-                        <br/>
-                        <div className='text-center'>
-                        <Button className='text-white text-sm inline-block font-bold border-0 px-5 py-2 decoration-0 rounded bg-cyan-900 hover:bg-teal-600 ...' text='Save' onClick={handleSubmit}>Submit</Button>
+                                <input ref={inputRef} name='text' input='file' id='myFile' multiple className='form input pb-2' placeholder='Upload' />
+                            </fieldset> */}
+                            </div>
+                            <br />
+                            <form>
+                                <Button className='text-white text-sm inline-block font-bold border-0 px-5 py-2 decoration-0 rounded bg-cyan-900 hover:bg-teal-600 ...' text='Save' onClick={() => handleSubmit()}>Submit</Button>
+                            </form>
                         </div>
                     </div>
                 </div>
-            </div>
-        </Layout>
-    )
-
+            </Layout>
+        )
+    }
 
 }
 

@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { TokenContext,CartContext } from "../utils/context";
+import { TokenContext } from "../utils/context";
 import Homepage from "../pages/Homepage";
 import Login from "../pages/auth/Login";
 import Detailbook from "../pages/Detailbook";
@@ -38,7 +38,7 @@ const Router = () => {
                     <Route path="/cart" element={<Cart />}></Route>
                     <Route path="/checkout" element={<Checkout />}></Route>
                     <Route path="/profile" element={<Profile />}></Route>
-                    <Route path="/updateproduct" element={<UpdateProduct />}></Route>
+                    <Route path="/updateproduct/:book_id" element={<UpdateProduct />}></Route>
                     <Route path="/productlist" element={<ProductList />}></Route>
                     <Route path="/history" element={<History />}></Route>
                     <Route path="/cart" element={<Cart />}></Route>
