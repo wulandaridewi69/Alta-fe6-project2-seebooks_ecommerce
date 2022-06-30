@@ -65,6 +65,7 @@ const Login = () => {
             .then((res) => {
                 const { token } = res.data.data;
                 localStorage.setItem("token", token);
+                localStorage.setItem("idUser",res.data.data.user_id)
                 setToken(token);
             })
             .catch(() => {

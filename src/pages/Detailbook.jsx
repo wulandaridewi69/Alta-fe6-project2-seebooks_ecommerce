@@ -92,7 +92,6 @@ const Detailbooks = () => {
             description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Laoreet id donec ultrices tincidunt arcu non sodales neque. Amet consectetur adipiscing elit duis tristique sollicitudin nibh. Viverra vitae congue eu consequat ac felis donec. Vitae ultricies leo integer malesuada nunc vel. Eu tincidunt tortor aliquam nulla facilisi cras fermentum. Sit amet consectetur adipiscing elit duis tristique sollicitudin nibh sit. Nisl nunc mi ipsum faucibus vitae aliquet nec ullamcorper. Egestas fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate sapien. Nullam vehicula ipsum a arcu cursus vitae congue mauris rhoncus. Ac orci phasellus egestas tellus. At consectetur lorem donec massa sapien faucibus et.",
         }
     ]
-  const { cart,setCart } = useContext(CartContext);
   const {token} = useContext(TokenContext)
 
   const navigate = useNavigate()
@@ -116,15 +115,6 @@ const Detailbooks = () => {
       setWrongInput("Incorrect input Please check again")
       ref.current.focus()
     } else {
-      if (localStorage.getItem('cart')) {
-        const temp = JSON.parse(localStorage.getItem('cart'))
-        localStorage.setItem('cart',JSON.stringify([...temp,book_id]))
-        setCart([...temp,book_id])
-      } else {
-        localStorage.setItem('cart',JSON.stringify([book_id]))
-        setCart([book_id])
-        console.log(book_id)
-      }
       setWrongInput("")
     }
   }
@@ -175,7 +165,7 @@ const Detailbooks = () => {
           </div>
           <div className='flex gap-4'>
             {
-              !cart.find((search) => search === book_id) ? (
+              3 !== book_id ? (
                 <>
                   <Button className='rounded text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-cyan-900 hover:bg-teal-600 ... text-center text-base' onClick={() => addToCart()}>Add to Cart</Button>
                   <button className='bg-white font-bold py-2 px-5 rounded text-cyan-900 border-[0.1rem] border-cyan-900' onClick={()=>addToCart()}>Buy Now</button>

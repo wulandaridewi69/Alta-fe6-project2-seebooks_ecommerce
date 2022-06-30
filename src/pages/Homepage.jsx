@@ -5,73 +5,15 @@ import Layout from "../components/Layout"
 import { CardBook } from "../components/Card"
 import axios from 'axios'
 import vectorImg from "../assets/5836 1.png"
-import imgComic from "../assets/comic.jpg"
-import imgBiography from "../assets/biography.png"
-import imgMagazine from "../assets/magazine.jpg"
-import imgEncy from "../assets/encyclopediajpg.jpg"
-import imgNovel from "../assets/novel.jpg"
-import imgTextBooks from "../assets/modern-physics.jpg"
 
 const Homepage = () => {
-
-    // dummy api
-    const categoryApi = [' Novel','Magazine','Comic','Textbook','Biography','Encyclopedia']
-    const produk = [
-        {
-            id:1,
-            imgSrc: imgComic,
-            title: "Dark Crisis",
-            writer: "DC Comic",
-            stock: "20",
-            price: "10"
-        },
-        {
-            id:2,
-            imgSrc: imgBiography,
-            title: "Mind Afire",
-            writer: "Abigail Samoun",
-            stock: "70",
-            price: "50"
-        },
-        {
-            id:3,
-            imgSrc: imgMagazine,
-            title: "Savoy",
-            writer: "Savoy",
-            stock: "50",
-            price: "10"
-        },
-        {
-            id:4,
-            imgSrc: imgEncy,
-            title: "Brytannica Allnew",
-            writer: "Christopher Lyliod",
-            stock: "90",
-            price: "50"
-        },
-        {
-            id:5,
-            imgSrc: imgNovel,
-            title: "Layangan Putus",
-            writer: "Momy Asf",
-            stock: "50",
-            price: "5"
-        },
-        {
-            id:6,
-            imgSrc: imgTextBooks,
-            title: "Modern Physics in the universe of madnesss",
-            writer: "Kenneth Krane",
-            stock: "200",
-            price: "50"
-        }
-    ]
     
     const params = useParams()
     const navigate = useNavigate()
     
     const [categorys, setCategorys] = useState([])
-    const [loading, setLoading] =useState(true)
+    const [loading, setLoading] = useState(true)
+    const [books,setBooks]= useState()
     const [pathCategory, setPathCategory] = useState(params.category)
 
     useEffect(() => {
@@ -83,11 +25,13 @@ const Homepage = () => {
         .then((res) => {
             const { data } = res.data;
             if (!pathCategory) {
-                setPathCategory('All')
                 setCategorys(data)
+                setPathCategory('All')
+                fetchAllBook()
             } else {
-                if (data.find((search) => search.name.toLowerCase() === pathCategory.toLowerCase()) || pathCategory.toLowerCase()==='all') {
+                if (data.find((search) => search.name === pathCategory) || pathCategory.toLowerCase()==='all') {
                     setCategorys(data)
+                    fetchByCategory(pathCategory)
                 } else {
                     navigate(`../${pathCategory}/Not Found`,{replace:true})
                 }
@@ -96,11 +40,48 @@ const Homepage = () => {
         .catch((err) => {
             console.log(err)    
         })
+    }
+
+    const fetchByCategory = (category) => {
+        axios.get(`http://34.125.69.172/books/filter?category=${category}`, {
+            headers: {
+                'accept': 'application/json',
+                'Content-Type': 'aplication/json',
+            }
+        })
+        .then((res) => {
+            setBooks(res.data.data);    
+        }).catch((err) => {
+            alert(err)
+        })
+        .finally(()=>setLoading(false))
+    }
+
+    const fetchAllBook = () => {
+        axios.get('http://34.125.69.172/books', {
+            headers: {
+                'accept': 'application/json',
+                'Content-Type': 'aplication/json',
+            }
+        })
+        .then((res) => {
+            setBooks(res.data.data);    
+        }).catch((err) => {
+            alert(err)
+        })
         .finally(()=>setLoading(false))
     }
 
     const handleNavigate = (path) => {
-        path === '' ? setPathCategory('All') : setPathCategory(path)
+        if (path === '') {
+            setPathCategory('All')
+            setLoading(true)
+            fetchAllBook()
+        } else {
+            setPathCategory(path)
+            setLoading(true)
+            fetchByCategory(path)
+        }
         navigate(`../${path}`,{replace:true})
     }
     
@@ -140,22 +121,24 @@ const Homepage = () => {
                     </div>
                 </div>
                 <div className="text-4xl font-bold pl-5 ml-5 border-l-8 border-teal-600">{pathCategory}</div>
-                <div className="mt-5 pt-0 p-4 grid grid-cols-2 xl:grid-cols-6 gap-4">
-                    {produk.map((book) => (
-                        <CardBook
-                            key={book.id}
-                            cardImg={book.imgSrc}
-                            title={book.title}
-                            writer={book.writer}
-                            stock={book.stock}
-                            price={book.price}
-                            goToDetail={() => navigate(`../detail/${book.id}`, { replace: true })}
-                        />
-                    ))}
-                </div>
-                <div className="flex justify-center my-6">
-                    <Button className="bg-cyan-900 hover:bg-teal-600 py-2 px-5 rounded text-white">Load More</Button>
-                </div>
+                    {books.length > 0 ? (
+                        <div className="my-5 pt-0 p-4 grid grid-cols-2 xl:grid-cols-6 gap-4">
+                            {books.map((book) => (
+                                <CardBook
+                                    key={book.id}
+                                    cardImg={!book.img_url && 'https://eproc.lkpp.go.id/v3/img/no-picture.jpg'}
+                                    title={book.title}
+                                    writer={book.author}
+                                    stock={book.stock}
+                                    price={book.price}
+                                    goToDetail={() => navigate(`../detail/${book.id}`, { replace: true })}
+                                />)
+                            )}
+                        </div>
+                    ) : (
+                        <div className="text-slate-300 flex justify-center p-24 text-5xl font-bold m-5">No Result</div>
+                    )
+                    }
             </Layout>
         )
     }

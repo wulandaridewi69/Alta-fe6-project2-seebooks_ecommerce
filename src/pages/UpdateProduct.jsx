@@ -9,36 +9,53 @@ import { useEffect } from 'react'
 import { useRef } from 'react'
 import Sidebar from '../components/Sidebar'
 
+
 const UpdateProduct = (props) => {
-
-    const [edit, setEdit] = useState({
-        id: '',
-        value: ''
-    });
-
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [phone, setPhone] = useState('');
-    const [address, setAddress] = useState('');
-
     const inputRef = useRef(null);
 
-    useEffect(() => {
-        if (props.edit) {
-            inputRef.current.focus();
-        } else {
-            inputRef.current.blur();
-        }
-    })
+    const [Title, setTitle] = useState('');
+    const [author, setAuthor] = useState('');
+    const [categories, setCategories] = useState('');
+    const [description, setDescription] = useState('');
+    const [pages, setPages] = useState('');
+    const [isbn, setIsbn] = useState('');
+    const [publisher, setPublisher] = useState('');
+    const [price, setPrice] = useState('');
+    const [stock, setStock] = useState('');
+    const [image, setImage] = useState('');
+    const [submit, setSubmit] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
+    const [edit, setEdit] = useState('');
 
-    const handleChange = (e, type) => {
-        setUsername(e.target.value);
-        setEmail(e.target.value);
-        setPassword(e.target.value);
-        setPhone(e.target.value);
-        setAddress(e.target.value);
-        console.log(e.target.value);
+
+    useEffect(() => {
+        const getProduct = async (id) => {
+            const response = await fetch(`http://localhost:3001/api/v1/products/${id}`);
+            const data = await response.json();
+            setTitle(data.data.title);
+            setAuthor(data.data.author);
+            setCategories(data.data.categories);
+            setDescription(data.data.description);
+            setPages(data.data.pages);
+            setIsbn(data.data.isbn);
+            setPublisher(data.data.publisher);
+            setPrice(data.data.price);
+            setStock(data.data.stock);
+            setImage(data.data.image);
+            setLoading(false);
+        }
+        getProduct();
+    }, []);
+
+    const updateProduct = async () => {
+        
+    }
+
+    const handleChange = async () => {
+
+    }
+    const handleSubmit = async () => {
     }
 
     const complete = () => {
@@ -50,17 +67,17 @@ const UpdateProduct = (props) => {
     }
 
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        props.onSubmit({
-            id: props.edit ? props.edit.id : null,
-        });
-        setUsername('');
-        setEmail('');
-        setPassword('');
-        setPhone('');
-        setAddress('');
-    }
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     props.onSubmit({
+    //         id: props.edit ? props.edit.id : null,
+    //     });
+    //     setedit('');
+    //     setEmail('');
+    //     setPassword('');
+    //     setPhone('');
+    //     setAddress('');
+    // }
 
     const submitUpdate = (value) => {
         // updateProfile(edit.id, value);
@@ -84,27 +101,27 @@ const UpdateProduct = (props) => {
                         <form>
                             <fieldset className='px-2 border-slate-300'>
                                 <legend className='legend'>Book Title</legend>
-                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "username")} value={username} className='form w-full input pb-2' placeholder='Physics' />
+                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "edit")} value={edit} className='form w-full input pb-2' placeholder='Physics' />
                             </fieldset>
                             <br />
                             <fieldset className='px-2 border-slate-300'>
                                 <legend className='legend'>Writer</legend>
-                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "username")} value={username} className='form w-full input pb-2' placeholder='Kenneth Krane' />
+                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "edit")} value={edit} className='form w-full input pb-2' placeholder='Kenneth Krane' />
                             </fieldset>
                             <br />
                             <fieldset className='px-2 border-slate-300'>
                                 <legend className='legend'>Description</legend>
-                                <textarea className='input w-full' ref={inputRef} name='text' onChange={(e) => handleChange(e, "address")} value={address} placeholder='The wonders of the speed of light, of gravitational waves, of molecular motors explained. Be amazed by the motion of stones, light, stars, atoms, muscles and empty space. Interesting facts. Fascinating puzzles. Beautiful Images. Clear explanations.' />
+                                <textarea className='input w-full' ref={inputRef} name='text' onChange={(e) => handleChange(e, "address")} value={edit} placeholder='The wonders of the speed of light, of gravitational waves, of molecular motors explained. Be amazed by the motion of stones, light, stars, atoms, muscles and empty space. Interesting facts. Fascinating puzzles. Beautiful Images. Clear explanations.' />
                             </fieldset>
                             <br />
                             <fieldset className='px-2 border-slate-300'>
                                 <legend className='legend'>Pages</legend>
-                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "username")} value={username} className='form w-full input pb-2' placeholder='1024' />
+                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "edit")} value={edit} className='form w-full input pb-2' placeholder='1024' />
                             </fieldset>
                             <br />
                             <fieldset className='px-2 border-slate-300 mb-4'>
                                 <legend className='legend'>ISBN</legend>
-                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "username")} value={username} className='form w-full input pb-2' placeholder='9386105268' />
+                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "edit")} value={edit} className='form w-full input pb-2' placeholder='9386105268' />
                             </fieldset>
                         </form>
                     </div>
@@ -112,23 +129,23 @@ const UpdateProduct = (props) => {
                         <form className='pt-20'>
                             <fieldset className='px-2 border-slate-300'>
                                 <legend className='legend'>Publisher</legend>
-                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "username")} value={username} className='form w-full input pb-2' placeholder='Griffith' />
+                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "edit")} value={edit} className='form w-full input pb-2' placeholder='Griffith' />
                             </fieldset>
                             <br />
                             <fieldset className='px-2 border-slate-300'>
                                 <legend className='legend'>Price</legend>
-                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "username")} value={username} className='form w-full input pb-2' placeholder='$ 21.58' />
+                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "edit")} value={edit} className='form w-full input pb-2' placeholder='$ 21.58' />
                             </fieldset>
                             <br />
                             <fieldset className='px-2 border-slate-300'>
                                 <legend className='legend'>Stock</legend>
-                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "username")} value={username} className='form w-full input pb-2' placeholder='10' />
+                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "edit")} value={edit} className='form w-full input pb-2' placeholder='10' />
                             </fieldset>
                             <br />
                             <fieldset className='px-2 border-slate-300'>
                                 <legend className='legend'>Upload Image</legend>
                                 <label for='myfile'>Choose File</label>
-                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "username")} input='file' id='myFile' multiple value={username} className='form w-full input pb-2' placeholder='Upload' />
+                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "edit")} input='file' id='myFile' multiple value={edit} className='form w-full input pb-2' placeholder='Upload' />
                             </fieldset>
                         </form>
                         <br/>

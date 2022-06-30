@@ -1,6 +1,4 @@
 import React from 'react'
-import Product from '../assets/products.png'
-import History from '../assets/history.png'
 import Layout from '../components/Layout'
 import Button from '../components/Button'
 import Photo from '../assets/profile.jpg'
@@ -8,7 +6,7 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { useRef } from 'react'
 
-const Histories = (props) => {
+const History = (props) => {
 
     const [edit, setEdit] = useState({
         id: '',
@@ -76,4 +74,4 @@ const Histories = (props) => {
     )
 }
 
-export default Histories;
+export default History;
