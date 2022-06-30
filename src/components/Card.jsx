@@ -51,7 +51,7 @@ export const CardProduct = (props) => {
                     {props.title}
                 </div>
                 <div className='text-slate-500 mb-2'>
-                    {props.writer}  
+                    Price {`$ ${(parseInt(props.payment)).toLocaleString()}`}  
                 </div>
                 <div className='font-bold flex justify-between'>
                     <p>Qty</p>{props.qty}

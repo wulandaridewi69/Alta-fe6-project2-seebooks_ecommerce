@@ -139,7 +139,6 @@ const Profile = () => {
             const formData = new FormData()
             formData.append("username",name)
             formData.append("email",email)
-            formData.append("password",pwd)
             formData.append("alamat",address)
             formData.append("notelp", telp)
 
@@ -176,6 +175,29 @@ const Profile = () => {
         setModal(true)
     }
 
+    const handleDelete = () => {
+        const id= localStorage.getItem('idUser')
+        axios.delete(`http://34.125.69.172/users/${id}`, {
+        headers: {
+                'accept': 'application/json',
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(() => {
+            alert('sukses delete')
+            handleLogout()
+        })
+        .catch((err) => {
+            if (err.response.status === 400) {
+                navigate(`/detail/${id}/Not Found`)
+            } else {
+                alert(err)
+            }
+        })
+        .finally(() => setLoading(false))
+    }
+
     const handleLogout = () => {
         localStorage.removeItem("token");
         setToken("0");
@@ -199,7 +221,7 @@ const Profile = () => {
                         onClose={() => setModal(false)}>
                         <Box className="w-1/3 min-h-1/2 translate-x-full translate-y-1/4 bg-white flex flex-col justify-center rounded-lg items-center shadow-2xl p-5 gap-3" >
                             <p className='text-4xl font-bold text-center my-5'>Are you sure to delete your account ?</p>
-                            <Button className="bg-red-800 font-bold py-2 px-5 rounded text-white">Delete</Button>
+                            <Button className="bg-red-800 font-bold py-2 px-5 rounded text-white" onClick={()=>handleDelete()}>Delete</Button>
                         </Box>
                     </Modal>
                     <div className='container-xxl'>
@@ -210,7 +232,7 @@ const Profile = () => {
                                     <p>Products</p>
                                 </div>
                                 <br />
-                                <div className='history flex gap-x-5 cursor-pointer' onClick={() => navigate('/histories')}>
+                                <div className='history flex gap-x-5 cursor-pointer' onClick={() => navigate('/history')}>
                                     <img src={History} alt='' />
                                     <p>History</p>
                                 </div>
