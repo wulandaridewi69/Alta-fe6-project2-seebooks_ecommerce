@@ -195,12 +195,12 @@ const Profile = () => {
                     <div className='row'>
                         <div className='col-2 min-h-screen bg-slate-200'>
                             <div className='product flex gap-x-5 mt-24 cursor-pointer' onClick={()=>navigate('/productlist')}>
-                                <img src={Product} />
+                                <img src={Product} alt=''/>
                                 <p>Products</p>
                             </div>
                             <br />
                             <div className='history flex gap-x-5 cursor-pointer' onClick={()=>navigate('/histories')}>
-                                <img src={History} />
+                                <img src={History} alt=''/>
                                 <p>History</p>
                             </div>
                         </div>
