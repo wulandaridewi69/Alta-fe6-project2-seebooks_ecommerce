@@ -7,6 +7,7 @@ import Photo from '../assets/profile.jpg'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useRef } from 'react'
+import Sidebar from '../components/Sidebar'
 
 const CreateProduct = (props) => {
 
@@ -74,24 +75,11 @@ const CreateProduct = (props) => {
             <div className='container'>
                 <div className='row'>
                     <div className='col-2 bg-slate-200'>
-                        <div className='product flex gap-x-5 mt-24'>
-                            <img src={Product} />
-                            <p>Products</p>
-                        </div>
-                        <br />
-                        <div className='history flex gap-x-5'>
-                            <img src={History} />
-                            <p>History</p>
-                        </div>
+                        <Sidebar />
                     </div>
                     <div className='col-5'>
                         <div className='p-3 mb-3 text-2xl font-bold'>
-                            Update Product
-                        </div>
-                        <br/>
-                        <div className='history flex gap-x-5'>
-                            <img src={History} />
-                            <p>History</p>
+                            Create Product
                         </div>
                         <form>
                             <fieldset className='px-2 border-slate-300'>
@@ -114,7 +102,7 @@ const CreateProduct = (props) => {
                                 <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "username")} value={username} className='form input pb-2' placeholder='1024' />
                             </fieldset>
                             <br />
-                            <fieldset className='px-2 border-slate-300'>
+                            <fieldset className='px-2 border-slate-300 mb-4'>
                                 <legend className='legend'>ISBN</legend>
                                 <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "username")} value={username} className='form input pb-2' placeholder='9386105268' />
                             </fieldset>
@@ -124,17 +112,17 @@ const CreateProduct = (props) => {
                         <form className='pt-20'>
                             <fieldset className='px-2 border-slate-300'>
                                 <legend className='legend'>Publisher</legend>
-                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "username")} value={username} className='form input pb-2' placeholder='Griffith' />
+                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "username")} value={username} className='form w-full input pb-2' placeholder='Griffith' />
                             </fieldset>
                             <br />
                             <fieldset className='px-2 border-slate-300'>
                                 <legend className='legend'>Price</legend>
-                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "username")} value={username} className='form input pb-2' placeholder='$ 21.58' />
+                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "username")} value={username} className='form w-full input pb-2' placeholder='$ 21.58' />
                             </fieldset>
                             <br />
                             <fieldset className='px-2 border-slate-300'>
                                 <legend className='legend'>Stock</legend>
-                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "username")} value={username} className='form input pb-2' placeholder='10' />
+                                <input ref={inputRef} name='text' onChange={(e) => handleChange(e, "username")} value={username} className='form w-full input pb-2' placeholder='10' />
                             </fieldset>
                             <br />
                             <fieldset className='px-2 border-slate-300'>
@@ -144,9 +132,9 @@ const CreateProduct = (props) => {
                             </fieldset>
                         </form>
                         <br/>
-                        <form>
-                        <Button className='btn-primary text-white text-sm inline-block font-bold border-0 px-5 py-2 decoration-0 bg-teal-500 hover:bg-teal-600 ... text-center' text='Save' onClick={handleSubmit}>Submit</Button>
-                        </form>
+                        <div className='text-center'>
+                        <Button className='text-white text-sm inline-block font-bold border-0 px-5 py-2 decoration-0 rounded bg-cyan-900 hover:bg-teal-600 ...' text='Save' onClick={handleSubmit}>Submit</Button>
+                        </div>
                     </div>
                 </div>
             </div>

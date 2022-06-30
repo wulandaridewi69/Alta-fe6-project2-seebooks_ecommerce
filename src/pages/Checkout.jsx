@@ -76,19 +76,20 @@ const Checkout = () => {
 
     return (
         <Layout>
-            <div className='bg-slate-200'>
+            <div className='bg-slate-300'>
                 <div className='container '>
                     <div className='row'>
                         <div className='col-6'>
                             <div className='p-3 mb-3 text-2xl font-bold'>
                                 Checkout
                             </div>
-                            <fieldset className='px-2 border-slate-300'>
-                                <legend className='legend'>Address</legend>
-                                <textarea className='input w-full bg-slate-200' name='text' onChange={(e) => handleChange(e, "address")} value={address} placeholder='st. May, No. 1, Malang City, Indonesia' />
+                            <fieldset className='px-2 border-zink-300'>
+                                <legend className='legend '>Address</legend>
+                                <textarea className='input w-full bg-slate-300' name='text' onChange={(e) => handleChange(e, "address")} value={address} placeholder='st. May, No. 1, Malang City, Indonesia' />
                             </fieldset>
-                            <div className="group inline-block relative">
-                                <button><span className="mr-2">Method Payment</span>▼</button>
+                            <br/>
+                            <div className="group inline-block relative ">
+                                <Button className='rounded text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-cyan-900 hover:bg-teal-600 ... text-center text-base' text='Save' onClick={handleSubmit}><span className="mr-2">Method Payment</span>▼</Button>
                             </div>
                         </div>
                         <div className='col-6'>
@@ -101,7 +102,7 @@ const Checkout = () => {
                                 </div>
                             </div>
                             <div className='text-center'>
-                                <Button className='btn-primary text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-teal-500 hover:bg-teal-600 ... text-center text-base' text='Save' onClick={handleSubmit}>Pay</Button>
+                                <Button className='rounded text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-cyan-900 hover:bg-teal-600 ... text-center text-base' text='Save' onClick={handleSubmit}>Pay</Button>
                             </div>
                         </div>
                     </div>
@@ -137,7 +138,7 @@ const Checkout = () => {
                 </div>
             </div>
             <div className="flex justify-center py-4">
-                <Button className='btn-tranparent border-teal-600 border-solid border-2 text-teal-600 inline-block font-bold px-5 py-2 decoration-0 bg-transparent ... text-center text-base' text='Save' onClick={handleSubmit}>Load More</Button>
+                <Button className='bg-cyan-900 rounded hover:bg-teal-600 text-white inline-block font-bold px-5 py-2 decoration-0 ... text-center text-base' text='Save' onClick={handleSubmit}>Load More</Button>
             </div>
         </Layout >
     )

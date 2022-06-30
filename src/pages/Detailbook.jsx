@@ -8,7 +8,8 @@ import imgMagazine from "../assets/magazine.jpg"
 import imgEncy from "../assets/encyclopediajpg.jpg"
 import imgNovel from "../assets/novel.jpg"
 import imgTextBooks from "../assets/modern-physics.jpg"
-import { TokenContext} from '../utils/context';
+import { TokenContext, CartContext } from '../utils/context';
+import Button from '../components/Button';
 
 const Detailbooks = () => {
   const produkApi = [
@@ -132,7 +133,7 @@ const Detailbooks = () => {
       <div className='flex pb-32'>
         <div className='px-10 flex flex-col items-center'>
           <img src={produkApi[book_id-1].imgSrc} className="w-[20vw]" alt="" />
-          <div className='p-2'>
+          <div className='p-2 text-xl'>
             <p>
               <span className='text-slate-500'>Pages : </span>{produkApi[book_id-1].pages} sheet
             </p>
@@ -157,20 +158,20 @@ const Detailbooks = () => {
           <div>
             <p className='font-bold text-4xl'>{ produkApi[book_id-1].title }</p>
             <p className='text-slate-400 text-lg'>{ produkApi[book_id-1].writer }</p>
-            <p className='font-bold text-4xl my-2'>{`$ ${(parseInt(produkApi[book_id-1].price)).toLocaleString()}`}</p>
+            <p className='font-bold text-4xl my-2 '>{`$ ${(parseInt(produkApi[book_id-1].price)).toLocaleString()}`}</p>
             <p className='text-teal-600 font-bold'>Description</p>
-            <p className='max-w-2xl mb-2'>{ produkApi[book_id-1].description}</p>
+            <p className='max-w-2xl mb-2 text-xl'>{ produkApi[book_id-1].description}</p>
             <p className=''><span className='text-teal-600 font-bold mr-4'>Category</span>{ produkApi[book_id-1].category}</p>
           </div>
           <div className='flex gap-4'>
             {
               3 !== book_id ? (
                 <>
-                  <button className='bg-teal-600 font-bold py-2 px-5 rounded text-white' onClick={()=>addToCart()}>Add to cart</button>
-                  <button className='bg-white font-bold py-2 px-5 rounded text-teal-600 border-[0.1rem] border-teal-700' onClick={()=>addToCart()}>Buy Now</button>
+                  <Button className='rounded text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-cyan-900 hover:bg-teal-600 ... text-center text-base' onClick={() => addToCart()}>Add to Cart</Button>
+                  <button className='bg-white font-bold py-2 px-5 rounded text-cyan-900 border-[0.1rem] border-cyan-900' onClick={()=>addToCart()}>Buy Now</button>
                 </>
               ) : (
-                <button className='bg-teal-600 font-bold py-2 px-5 rounded text-white' onClick={() => updateToCart()}>Update to cart</button>
+                <Button className='rounded text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-cyan-900 hover:bg-teal-600 ... text-center text-base' onClick={() => updateToCart()}>Update to Cart</Button>
               )
             }
           </div>

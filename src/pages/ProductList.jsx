@@ -15,32 +15,29 @@ import Photo from '../assets/profile.jpg'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useRef } from 'react'
+import Delete from '../assets/delete-circle.png'
+import Edit from '../assets/edit.png'
+import UpdateProduct from './UpdateProduct'
 // import CardBook from '../components/Card'
 
-const ProductList = (props) => {
+const ProductList = ({remove, update}) => {
 
     const [edit, setEdit] = useState({
         id: '',
         value: ''
     });
 
-
-    const complete = () => {
+    const submitUpdate = (value) => {
+        update(edit.id, value);
         setEdit({
             id: '',
             value: ''
         });
-        props.setEdit(false);
-    }
-
-
-    const submitUpdate = (value) => {
-        // updateProfile(edit.id, value);
-        setEdit({
-            id: '',
-            value: ''
-        })
     };
+
+    if (edit.id) {
+        return <UpdateProduct submitUpdate={submitUpdate} />;
+    }
 
     return (
         <Layout>
@@ -67,32 +64,32 @@ const ProductList = (props) => {
                                     <img src={Physics} className='h-75 w-55 ' />
                                     <h5 className='font-semibold'>Modern Physics</h5>
                                     <p className='text-slate-800 text-xs'>Keneeth Krane</p>
-                                    <Button className='btn-green justify-center text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-teal-500 hover:bg-teal-600 ... text-center text-base' text='Edit' onClick={() => props.setEdit(true)}>Edit</Button>
-                                    <Button className='gap-y-2 btn-danger center btn-primary text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-rose-800 hover:bg-rose-600 ... text-center text-base' text='Delete Account'>Delete</Button>
+                                    <Button className='btn-green rounded justify-center text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-teal-500 hover:bg-teal-600 ... text-center text-base' text='Edit' onClick={() => setEdit(true)}>Edit</Button>
+                                    <Button className='gap-y-2 roundedcenter btn-primary text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-rose-800 hover:bg-rose-600 ... text-center text-base' text='Delete Account'>Delete</Button>
                                 </div>
                                 <div className='col-2 border-4 border-gray-100 border-b-gray-400 rounded-xl'>
                                     <img src={Novel} className='h-75 w-55 border-4 ' />
                                     <h5 className='font-semibold'>Layangan Putus</h5>
                                     <p className='text-slate-800 text-xs'>Mommy ASF</p>
-                                    <Button className='btn-green justify-center text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-teal-500 hover:bg-teal-600 ... text-center text-base' text='Edit' onClick={() => props.setEdit(true)}>Edit</Button>
-                                    <Button className='gap-y-2 btn-danger center btn-primary text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-rose-800 hover:bg-rose-600 ... text-center text-base' text='Delete Account'>Delete</Button>
+                                    <Button className=' justify-center rounded text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-teal-500 hover:bg-teal-600 ... text-center text-base' text='Edit' onClick={() => setEdit(true)}>Edit</Button>
+                                    <Button className='gap-y-2 rounded center btn-primary text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-rose-800 hover:bg-rose-600 ... text-center text-base' text='Delete Account'>Delete</Button>
                                 </div>
                                 <div className='col-2 border-4 border-gray-100 border-b-gray-400 rounded-xl'>
                                     <img src={Comic} className='h-75 w-55 border-4 ' />
                                     <h5 className='font-semibold'>Dark Crisis</h5>
                                     <p className='text-slate-800 text-xs'>DC</p>
-                                    <Button className='btn-green justify-center text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-teal-500 hover:bg-teal-600 ... text-center text-base' text='Edit' onClick={() => props.setEdit(true)}>Edit</Button>
-                                    <Button className='gap-y-2 btn-danger center btn-primary text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-rose-800 hover:bg-rose-600 ... text-center text-base' text='Delete Account'>Delete</Button>
+                                    <Button className='justify-center rounded text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-teal-500 hover:bg-teal-600 ... text-center text-base' text='Edit' onClick={() => setEdit(true)}>Edit</Button>
+                                    <Button className='gap-y-2 center rounded btn-primary text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-rose-800 hover:bg-rose-600 ... text-center text-base' text='Delete Account'>Delete</Button>
                                 </div>
                                 <div className='col-2 border-4 border-gray-100 border-b-gray-400 rounded-xl'>
                                     <img src={Biography} className='h-75 w-55 border-4 ' />
                                     <h5 className='font-semibold'>Mind Fire</h5>
                                     <p className='text-slate-800 text-xs'>Abigail S</p>
-                                    <Button className='btn-green justify-center text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-teal-500 hover:bg-teal-600 ... text-center text-base' text='Edit' onClick={() => props.setEdit(true)}>Edit</Button>
-                                    <Button className='gap-y-2 btn-danger center btn-primary text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-rose-800 hover:bg-rose-600 ... text-center text-base' text='Delete Account'>Delete</Button>
+                                    <Button className=' justify-center rounded text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-teal-500 hover:bg-teal-600 ... text-center text-base' text='Edit' onClick={() => setEdit(true)}>Edit</Button>
+                                    <Button className='gap-y-2 center rounded text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-rose-800 hover:bg-rose-600 ... text-center text-base' text='Delete Account'>Delete</Button>
                                 </div>
-                                <div className='justify-center pt-20 text--center'>
-                                    <Button className='btn-tranparent border-teal-600 border-solid border-2 text-teal-600 inline-block font-bold px-5 py-2 decoration-0 bg-transparent ... text-center text-base' text='Save'>Load More</Button>
+                                <div className='justify-center pt-20 text-center'>
+                                <Button className="bg-cyan-900 hover:bg-teal-600 py-2 px-5 rounded text-white">Load More</Button>
                                 </div>
                             </div>
                         </div>

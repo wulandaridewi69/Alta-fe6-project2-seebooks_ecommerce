@@ -1,6 +1,4 @@
 import React from 'react'
-import Product from '../assets/products.png'
-import History from '../assets/history.png'
 import Layout from '../components/Layout'
 import Button from '../components/Button'
 import Photo from '../assets/profile.jpg'
@@ -8,7 +6,7 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { useRef } from 'react'
 
-const Histories = (props) => {
+const History = (props) => {
 
     const [edit, setEdit] = useState({
         id: '',
@@ -71,23 +69,9 @@ const Histories = (props) => {
 
     return (
         <Layout>
-            <div className="container">
-                <div className="row">
-                    <div className='col-2 bg-slate-200'>
-                        <div className='product flex gap-x-5 mt-24'>
-                            <img src={Product} />
-                            <p>Products</p>
-                        </div>
-                        <br />
-                        <div className='history flex gap-x-5'>
-                            <img src={History} />
-                            <p>History</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </Layout>
     )
 }
 
-export default Histories;
+export default History;
