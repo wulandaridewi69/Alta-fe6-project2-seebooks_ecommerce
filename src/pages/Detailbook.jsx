@@ -15,7 +15,8 @@ const Detailbooks = () => {
   const ref = useRef(null);
   const [book,setBook] = useState('')
   const [wrongInput, setWrongInput] = useState('')
-  const [loading,setLoading] = useState(true)
+  const [loading, setLoading] = useState(true)
+  const [isInCart,setIsInCart] = useState(false)
   
   useEffect(() => {
     fetchDetailBook()
@@ -40,13 +41,34 @@ const Detailbooks = () => {
     }
   }
 
+  const handleAddCart = () => {
+    setLoading(true)
+    const payment = qty*book.price
+    const formData = new FormData()
+    formData.append('quantity',qty)
+    formData.append('price',payment)
+    axios.post(`http://34.125.69.172/carts/${book_id}`, formData, {
+        headers: {
+            'accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${token}`
+        }
+    }).then((res) => {
+      alert(res.data.message)
+        setIsInCart(true)
+    }).catch((err) => {
+      alert(err)
+    }).finally(()=>setLoading(false))
+  }
+
+
   const addToCart = () => {
     if(token==='0'){navigate('/login')}
     if (qty > parseInt(book.stock) || qty < 1) {
       setWrongInput("Incorrect input Please check again")
       ref.current.focus()
     } else {
-      navigate('/cart')
+      handleAddCart()
       setWrongInput("")
     }
   }
@@ -109,7 +131,7 @@ const Detailbooks = () => {
             </div>
             <div className='flex gap-4'>
               {
-                3 !== book_id ? (
+                !isInCart ? (
                   <>
                     <button className='bg-teal-600 font-bold py-2 px-5 rounded text-white' onClick={() => addToCart()}>Add to cart</button>
                     <button className='bg-white font-bold py-2 px-5 rounded text-teal-600 border-[0.1rem] border-teal-700' onClick={() => addToCart()}>Buy Now</button>

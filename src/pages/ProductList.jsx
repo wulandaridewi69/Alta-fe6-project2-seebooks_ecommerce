@@ -50,6 +50,25 @@ const ProductList = ({remove, update}) => {
         .finally(()=>setLoading(false))
     }
 
+    const handleDelete = (id) => {
+        axios.delete(`http://34.125.69.172/books/${id}`, {
+            headers: {
+                    'accept': 'application/json',
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${token}`
+                }
+        })
+        .then(() => { alert('sukses delete') })
+        .catch((err) => {
+            if (err.response.status === 400) {
+                navigate(`/detail/${id}/Not Found`)
+            } else {
+                alert(err)
+            }
+        })
+        .finally(() => setLoading(false))
+    }
+
     if (token !== "0") {
         if (loading) {
             return (
@@ -96,7 +115,7 @@ const ProductList = ({remove, update}) => {
                                                             <h5 className='font-semibold'>{ item.title}</h5>
                                                             <p className='text-slate-800 text-xs'>{item.author}</p>
                                                             <Button className='btn-green rounded justify-center text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-teal-500 hover:bg-teal-600 ... text-center text-base' text='Edit' onClick={() => navigate(`../updateproduct/${item.id}`, { replace: true })}>Edit</Button>
-                                                            <Button className='gap-y-2 roundedcenter btn-primary text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-rose-800 hover:bg-rose-600 ... text-center text-base' text='Delete Account'>Delete</Button>
+                                                        <Button className='gap-y-2 roundedcenter btn-primary text-white inline-block font-bold border-0 px-5 py-2 decoration-0 bg-rose-800 hover:bg-rose-600 ... text-center text-base' text='Delete Account' onClick={ ()=> handleDelete(item.id) }>Delete</Button>
                                                         </div>
                                                     )
                                                 )}

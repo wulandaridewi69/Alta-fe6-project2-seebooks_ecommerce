@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Product from '../assets/products.png'
 import History from '../assets/history.png'
 import Layout from '../components/Layout'
@@ -14,6 +14,7 @@ import Select from '@mui/material/Select';
 import Sidebar from '../components/Sidebar'
 import axios from 'axios'
 import { useNavigate, useParams } from 'react-router'
+import { TokenContext } from '../utils/context'
 
 
 const UpdateProduct = (props) => {
@@ -21,9 +22,10 @@ const UpdateProduct = (props) => {
 
     const navigate = useNavigate()
     const params = useParams()
+    const token = useContext(TokenContext)
 
     const book_id = params.book_id
-    const [listCategory, setListCategory] = useState()
+    const [listCategory, setListCategory] = useState([])
     const [title,setTitle] = useState('') 
     const [author,setAuthor] = useState('') 
     const [description,setDescription] = useState('') 
@@ -45,9 +47,9 @@ const UpdateProduct = (props) => {
             const data = res.data
             setTitle(data.data.title);
             setAuthor(data.data.author);
-            setCategories(data.data.categories);
+            setCategories(data.data.category);
             setDescription(data.data.description);
-            setPages(data.data.pages);
+            setPages(data.data.book_page);
             setIsbn(data.data.isbn);
             setPublisher(data.data.publisher);
             setPrice(data.data.price);
@@ -113,7 +115,7 @@ const UpdateProduct = (props) => {
         price !== '' ?  passed = passed+1 : setPrice('added')
         stock !== '' ? passed = passed + 1 : setStock('added')
         
-        if (passed === 8) {
+        if (passed === 9) {
             putProduct()
         } else {
             alert('field tidak boleh kosong!')
@@ -122,17 +124,22 @@ const UpdateProduct = (props) => {
 
     const putProduct = () => {
         const formData = new FormData()
-        formData.append(title)
-        formData.append(author)
-        formData.append(description)
-        formData.append(pages)
-        formData.append(isbn)
-        formData.append(publisher)
-        formData.append(price)
-        formData.append(stock)
-        axios.put('http://34.125.69.172/books', formData, {
+        formData.append('user_id',localStorage.getItem('idUser'))
+        formData.append('title',title)
+        formData.append('author', author)
+        formData.append('category', category)
+        formData.append('description',description)
+        formData.append('book_page',pages)
+        formData.append('isbn',isbn)
+        formData.append('publisher',publisher)
+        formData.append('price',price)
+        formData.append('stock', stock)
+        
+        axios.put(`http://34.125.69.172/books/${book_id}`, formData, {
                 headers: {
+                    'accept': 'application/json',
                     'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${token}`
                 }
         }).then(() => {
             navigate('/productlist')        
@@ -185,7 +192,7 @@ const UpdateProduct = (props) => {
                                 <br />
                                 <fieldset className='px-2 border-slate-300'>
                                     <FormControl fullWidth>
-                                        <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                                        <InputLabel id="demo-simple-select-label">Category</InputLabel>
                                         <Select
                                             labelId="demo-simple-select-label"
                                             id="demo-simple-select"
@@ -240,9 +247,7 @@ const UpdateProduct = (props) => {
                             </fieldset> */}
                             </div>
                             <br />
-                            <form>
-                                <Button className='text-white text-sm inline-block font-bold border-0 px-5 py-2 decoration-0 rounded bg-cyan-900 hover:bg-teal-600 ...' text='Save' onClick={() => handleSubmit()}>Submit</Button>
-                            </form>
+                            <Button className='text-white text-sm inline-block font-bold border-0 px-5 py-2 decoration-0 rounded bg-cyan-900 hover:bg-teal-600 ...' text='Save' onClick={() => handleSubmit()}>Submit</Button>
                         </div>
                     </div>
                 </div>

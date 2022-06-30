@@ -19,14 +19,8 @@ const History = (props) => {
     const [phone, setPhone] = useState('');
     const [address, setAddress] = useState('');
 
-    const inputRef = useRef(null);
-
     useEffect(() => {
-        if (props.edit) {
-            inputRef.current.focus();
-        } else {
-            inputRef.current.blur();
-        }
+        
     })
 
     const handleChange = (e, type) => {

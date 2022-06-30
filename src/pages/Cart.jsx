@@ -11,6 +11,7 @@ import imgNovel from "../assets/novel.jpg"
 import imgTextBooks from "../assets/modern-physics.jpg"
 import { TokenContext } from "../utils/context";
 import { Modal,Box } from '@mui/material'
+import axios from 'axios'
 
 const Cart = () => {
     const { token } = useContext(TokenContext);
@@ -19,6 +20,8 @@ const Cart = () => {
     const [data, setData] = useState([]);
     const [modal, setModal] = useState(false)
     const [selected, setSelected] = useState(0)
+    const [cart, setCart] = useState()
+    const [loading,setLoading] = useState(true)
     
     const produk = [
         {
@@ -73,6 +76,25 @@ const Cart = () => {
 
     let subTotal = 0
 
+    useEffect(() => {
+        fetchCart()
+    },[])
+
+    const fetchCart = () => {
+        axios.get(`http://34.125.69.172/orderdetails/${localStorage.getItem('idUser')}`, {
+                headers: {
+                    'accept': 'application/json',
+                    'Content-Type': 'aplication/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+        ).then((res) => {
+            setCart(res.data.data)
+        })
+        .catch((err)=> alert(err))
+        .finally(()=>setLoading(false))
+    }
+
     const handleEdit = (idx) => {
         navigate(`../detail/${idx}`, { replace: true })
     }
@@ -81,49 +103,78 @@ const Cart = () => {
         setSelected(id)
     }
     const handleDelete = () => {
+        setLoading(true)
+        const id = localStorage.getItem('idUser')
+        axios.delete(`http://34.125.69.172/orderdetails/${selected}`, {
+        headers: {
+                'accept': 'application/json',
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(() => {
+            alert('sukses delete')
+        })
+        .catch((err) => {
+            if (err.response.status === 400) {
+                navigate(`/detail/${id}/Not Found`)
+            } else {
+                alert(err)
+            }
+        })
+        .finally(() => setLoading(false))
         setModal(false)
     }
     
     if (token !== "0") {
-        return (
-            <Layout>
-                <div className='p-4'>
-                    <p className='font-bold text-2xl'>Shopping Cart</p>
-                    <div className="mt-5 grid grid-cols-2 xl:grid-cols-6 gap-4">
-                        {produk.map((item) => {
-                            subTotal += parseInt(item.price)
-                            return (
-                                <CardProduct
-                                    key={item.id}
-                                    cardImg={item.imgSrc}
-                                    title={item.title}
-                                    writer={item.writer}
-                                    qty={item.stock}
-                                    payment={item.price}
-                                    goToDetail={() => handleEdit(item.id)}
-                                    edit={() => handleEdit(item.id)}
-                                    delete={() => selectDelete(item.id)}
-                                />
-                            )
-                        })}
+        if (loading) {
+            return (
+                <div className='h-screen w-screen flex justify-center items-center'>
+                    <div className='h-36 w-36 rounded-full bg-teal-600 animate-bounce'></div>
+                </div>
+            )
+        } else {
+            console.log(cart);
+            return (
+                <Layout>
+                    <div className='p-4'>
+                        <p className='font-bold text-2xl'>Shopping Cart</p>
+                        <div className="mt-5 grid grid-cols-2 xl:grid-cols-6 gap-4">
+                            {cart.map((item) => {
+                                subTotal += parseInt(item.price)
+                                return (
+                                    <CardProduct
+                                        key={item.id}
+                                        cardImg={item.imgSrc}
+                                        title={item.book.title}
+                                        writer={item.book.price}
+                                        qty={item.quantity_buy_book}
+                                        payment={item.total_price_book}
+                                        goToDetail={() => handleEdit(item.book.id)}
+                                        edit={() => handleEdit(item.book.id)}
+                                        delete={() => selectDelete(item.id)}
+                                    />
+                                )
+                            })}
+                        </div>
                     </div>
-                </div>
-                <Modal
-                    open={modal}
-                    onClose={()=>setModal(false)}>
-                    <Box className="w-1/3 min-h-1/2 translate-x-full translate-y-1/4 bg-white flex flex-col justify-center rounded-lg items-center shadow-2xl p-5 gap-3" >
-                        <p className='text-4xl font-bold text-center my-5'>Are you sure to delete from shoping cart ?</p>
-                        <Button className="bg-red-800 font-bold py-2 px-5 rounded text-white" onClick={()=>handleDelete()}>Delete</Button>
-                    </Box>
-                </Modal>
-                <div className='flex justify-between mt-8 px-4 pb-6'>
-                    <p className='font-bold text-2xl flex items-start'>
-                        Subtotal : <span className='ml-4 font-bold text-3xl'>$ {subTotal}</span>
-                    </p>
-                    <Button className='bg-white font-bold py-2 px-5 rounded text-teal-600 border-[0.1rem] border-teal-700' onClick={()=>navigate('/checkout')}>Proccess To Checkout</Button>
-                </div>
-            </Layout>
-        )
+                    <Modal
+                        open={modal}
+                        onClose={() => setModal(false)}>
+                        <Box className="w-1/3 min-h-1/2 translate-x-full translate-y-1/4 bg-white flex flex-col justify-center rounded-lg items-center shadow-2xl p-5 gap-3" >
+                            <p className='text-4xl font-bold text-center my-5'>Are you sure to delete from shoping cart ?</p>
+                            <Button className="bg-red-800 font-bold py-2 px-5 rounded text-white" onClick={() => handleDelete()}>Delete</Button>
+                        </Box>
+                    </Modal>
+                    <div className='flex justify-between mt-8 px-4 pb-6'>
+                        <p className='font-bold text-2xl flex items-start'>
+                            Subtotal : <span className='ml-4 font-bold text-3xl'>$ {subTotal}</span>
+                        </p>
+                        <Button className='bg-white font-bold py-2 px-5 rounded text-teal-600 border-[0.1rem] border-teal-700' onClick={() => navigate('/checkout')}>Proccess To Checkout</Button>
+                    </div>
+                </Layout>
+            )
+        }
     } else {
         return <Navigate to={'/login'} />
     }

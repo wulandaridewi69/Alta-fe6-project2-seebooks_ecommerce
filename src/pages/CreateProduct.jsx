@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Product from '../assets/products.png'
 import History from '../assets/history.png'
 import Layout from '../components/Layout'
@@ -16,6 +16,7 @@ import Select from '@mui/material/Select';
 import { Navigate } from 'react-router'
 import { useNavigate } from 'react-router'
 import Sidebar from '../components/Sidebar'
+import { TokenContext } from '../utils/context'
 
 const CreateProduct = (props) => {
 
@@ -24,8 +25,9 @@ const CreateProduct = (props) => {
         value: ''
     });
 
+    const {token} = useContext(TokenContext)
     const navigate = useNavigate()
-    const [listCategory, setListCategory] = useState()
+    const [listCategory, setListCategory] = useState([])
     const [loading,setLoading] = useState()
     const [title,setTitle] = useState('') 
     const [author,setAuthor] = useState('') 
@@ -94,7 +96,7 @@ const CreateProduct = (props) => {
         price !== '' ?  passed = passed+1 : setPrice('added')
         stock !== '' ? passed = passed + 1 : setStock('added')
         
-        if (passed === 8) {
+        if (passed === 9) {
             postProduct()
         } else {
             alert('field tidak boleh kosong!')
@@ -103,19 +105,23 @@ const CreateProduct = (props) => {
 
     const postProduct = () => {
         const formData = new FormData()
-        formData.append(title)
-        formData.append(author)
-        formData.append(description)
-        formData.append(pages)
-        formData.append(isbn)
-        formData.append(publisher)
-        formData.append(price)
-        formData.append(stock)
+        formData.append('user_id',localStorage.getItem('idUser'))
+        formData.append('title',title)
+        formData.append('author',author)
+        formData.append('description',description)
+        formData.append('book_page',pages)
+        formData.append('isbn',isbn)
+        formData.append('publisher',publisher)
+        formData.append('price',price)
+        formData.append('stock',stock)
         axios.post('http://34.125.69.172/books', formData, {
                 headers: {
+                    'accept': 'application/json',
                     'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${token}`
                 }
-        }).then(() => {
+        }).then((res) => {
+            alert(res)
             navigate('/productlist')        
         }).catch((err) => {
             alert(err)
@@ -153,7 +159,7 @@ const CreateProduct = (props) => {
                                 <img src={History} />
                                 <p>History</p>
                             </div>
-                            <form>
+                            <div>
                                 <fieldset className='px-2 border-slate-300'>
                                     <legend className='legend'>Book Title</legend>
                                     <input ref={inputRef} name='text' onChange={(e) => handleChange(e, 'title')} value={title} className='form input pb-2' placeholder='Physics' />
@@ -166,7 +172,7 @@ const CreateProduct = (props) => {
                                 <br />
                                 <fieldset className='px-2 border-slate-300'>
                                     <FormControl fullWidth>
-                                        <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                                        <InputLabel id="demo-simple-select-label">Category</InputLabel>
                                         <Select
                                             labelId="demo-simple-select-label"
                                             id="demo-simple-select"
@@ -195,7 +201,7 @@ const CreateProduct = (props) => {
                                     <legend className='legend'>ISBN</legend>
                                     <input ref={inputRef} name='text' onChange={(e) => handleChange(e, 'isbn')} value={isbn} className='form input pb-2' placeholder='9386105268' />
                                 </fieldset>
-                            </form>
+                            </div>
                         </div>
                         <div className='col-5'>
                             <div className='pt-20'>
@@ -221,9 +227,7 @@ const CreateProduct = (props) => {
                             </fieldset> */}
                             </div>
                             <br />
-                            <form>
-                                <Button className='text-white text-sm inline-block font-bold border-0 px-5 py-2 decoration-0 rounded bg-cyan-900 hover:bg-teal-600 ...' text='Save' onClick={() => handleSubmit()}>Submit</Button>
-                            </form>
+                            <Button className='text-white text-sm inline-block font-bold border-0 px-5 py-2 decoration-0 rounded bg-cyan-900 hover:bg-teal-600 ...' text='Save' onClick={() => handleSubmit()}>Submit</Button>
                         </div>
                     </div>
                 </div>
