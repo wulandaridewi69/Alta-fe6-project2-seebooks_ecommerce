@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import Button from "../components/Button"
 import Layout from "../components/Layout"
 import { CardProduct } from "../components/Card"
@@ -17,62 +17,12 @@ const Cart = () => {
     const { token } = useContext(TokenContext);
     const navigate = useNavigate()
 
-    const [data, setData] = useState([]);
+    const params = useParams()
+    const cart_id = params.cart_id
     const [modal, setModal] = useState(false)
     const [selected, setSelected] = useState(0)
-    const [cart, setCart] = useState()
+    const [cart, setCart] = useState([])
     const [loading,setLoading] = useState(true)
-    
-    const produk = [
-        {
-            id: 1,
-            imgSrc: imgComic,
-            title: "Dark Crisis",
-            writer: "DC Comic",
-            stock: "20",
-            price: "10"
-        },
-        {
-            id: 2,
-            imgSrc: imgBiography,
-            title: "Mind Afire",
-            writer: "Abigail Samoun",
-            stock: "70",
-            price: "50"
-        },
-        {
-            id: 3,
-            imgSrc: imgMagazine,
-            title: "Savoy",
-            writer: "Savoy",
-            stock: "50",
-            price: "10"
-        },
-        {
-            id: 4,
-            imgSrc: imgEncy,
-            title: "Brytannica Allnew",
-            writer: "Christopher Lyliod",
-            stock: "90",
-            price: "50"
-        },
-        {
-            id: 5,
-            imgSrc: imgNovel,
-            title: "Layangan Putus",
-            writer: "Momy Asf",
-            stock: "50",
-            price: "5"
-        },
-        {
-            id: 6,
-            imgSrc: imgTextBooks,
-            title: "Modern Physics in the universe of madnesss",
-            writer: "Kenneth Krane",
-            stock: "200",
-            price: "50"
-        }
-    ]
 
     let subTotal = 0
 
@@ -81,7 +31,7 @@ const Cart = () => {
     },[])
 
     const fetchCart = () => {
-        axios.get(`http://34.125.69.172/orderdetails/${localStorage.getItem('idUser')}`, {
+        axios.get(`http://34.125.69.172/orderdetails/${cart_id})}`, {
                 headers: {
                     'accept': 'application/json',
                     'Content-Type': 'aplication/json',

@@ -23,6 +23,7 @@ import { CardProduct } from '../components/Card'
 import Delete from '../assets/delete-circle.png'
 import Edit from '../assets/edit.png'
 import UpdateProduct from './UpdateProduct'
+import Sidebar from '../components/Sidebar'
 // import CardBook from '../components/Card'
 
 const ProductList = ({remove, update}) => {
@@ -81,16 +82,8 @@ const ProductList = ({remove, update}) => {
                 <Layout>
                     <div className=''>
                         <div className='row'>
-                            <div className='col-2 bg-slate-200 min-h-screen'>
-                                <div className='product flex gap-x-5 mt-24'>
-                                    <img src={Product} />
-                                    <p>Products</p>
-                                </div>
-                                <br />
-                                <div className='history flex gap-x-5'>
-                                    <img src={History} />
-                                    <p>History</p>
-                                </div>
+                            <div className='col-2 bg-slate-200'>
+                                <Sidebar />
                             </div>
                             <div className='col-10'>
                                 <div className='p-3 mb-3 text-2xl font-bold'>
