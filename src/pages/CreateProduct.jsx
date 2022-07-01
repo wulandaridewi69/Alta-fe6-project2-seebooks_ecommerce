@@ -141,15 +141,7 @@ const CreateProduct = (props) => {
                 <div className='container'>
                     <div className='row'>
                         <div className='col-2 bg-slate-200'>
-                            <div className='product flex gap-x-5 mt-24'>
-                                <img src={Product} />
-                                <p>Products</p>
-                            </div>
-                            <br />
-                            <div className='history flex gap-x-5'>
-                                <img src={History} />
-                                <p>History</p>
-                            </div>
+                            <Sidebar />
                         </div>
                         <div className='col-5'>
                             <div className='p-3 mb-3 text-2xl font-bold'>
